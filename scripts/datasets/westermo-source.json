@@ -1,0 +1,111 @@
+{
+  "repository": "https://github.com/westermo/test-system-performance-dataset",
+  "revision": "47e0ccdc10c30e86327d6eb828ed48d164469fd4",
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 18650,
+      "git_blob_sha1": "2f244ac814036ecd9ba9f69782e89ce6b1dca9eb"
+    },
+    {
+      "path": "README.md",
+      "bytes": 16562,
+      "git_blob_sha1": "da318e0d312070eee54a89e536a8e9b92941bae9"
+    },
+    {
+      "path": "data/system-1.csv",
+      "bytes": 20182096,
+      "git_blob_sha1": "9057f48acf7f02ff2eb2185fcb5d6a22647aabd2"
+    },
+    {
+      "path": "data/system-10.csv",
+      "bytes": 20483796,
+      "git_blob_sha1": "df7e407bd44e7d3d62feefb6fc9233361bf57077"
+    },
+    {
+      "path": "data/system-11.csv",
+      "bytes": 19661275,
+      "git_blob_sha1": "87392ab70b9e5c320d872efd57c7a408ab5776ff"
+    },
+    {
+      "path": "data/system-12.csv",
+      "bytes": 20066076,
+      "git_blob_sha1": "9eef116ca7b945992a26cddeb1a162a72f96a382"
+    },
+    {
+      "path": "data/system-13.csv",
+      "bytes": 21179628,
+      "git_blob_sha1": "25da509a3a6b1092ae68edad454349d5d71fead7"
+    },
+    {
+      "path": "data/system-14.csv",
+      "bytes": 19364519,
+      "git_blob_sha1": "35bd392af2649d2904160dc0ed478d3947227d1d"
+    },
+    {
+      "path": "data/system-15.csv",
+      "bytes": 20080060,
+      "git_blob_sha1": "2f50fda62e3a1b6db0b7b8b0d08d49a2d90a119f"
+    },
+    {
+      "path": "data/system-16.csv",
+      "bytes": 20164654,
+      "git_blob_sha1": "248769a527163c482d3a347663cef2bebe74b420"
+    },
+    {
+      "path": "data/system-17.csv",
+      "bytes": 19692663,
+      "git_blob_sha1": "1a0f127bfbbe0cb52166819ba19b34f4348c5f72"
+    },
+    {
+      "path": "data/system-18.csv",
+      "bytes": 20414012,
+      "git_blob_sha1": "36519c1472e4fdfdf1da9caa5b7cc1636d83db59"
+    },
+    {
+      "path": "data/system-19.csv",
+      "bytes": 19865480,
+      "git_blob_sha1": "6b7e22c57db1dd691b9c89ea8a95678286f94717"
+    },
+    {
+      "path": "data/system-2.csv",
+      "bytes": 20182281,
+      "git_blob_sha1": "29c8b1784503bf867bce011e9032b3fc6ed92c8d"
+    },
+    {
+      "path": "data/system-3.csv",
+      "bytes": 20085421,
+      "git_blob_sha1": "609dc52aee0e1f2aa2f31200ac715ca17a82efa1"
+    },
+    {
+      "path": "data/system-4.csv",
+      "bytes": 19877011,
+      "git_blob_sha1": "b7a3369888b1eeca9fb0ef2e286aee3f53753f66"
+    },
+    {
+      "path": "data/system-5.csv",
+      "bytes": 20458108,
+      "git_blob_sha1": "0fe20dab67e7b54786ce6c8eb17f43f9fb3d75f8"
+    },
+    {
+      "path": "data/system-6.csv",
+      "bytes": 18485998,
+      "git_blob_sha1": "75d9019f512fda53fe776378695524fdcbe6e21a"
+    },
+    {
+      "path": "data/system-7.csv",
+      "bytes": 19812090,
+      "git_blob_sha1": "60ea49f3a92b8ed32ebe1e788974478fdad95744"
+    },
+    {
+      "path": "data/system-8.csv",
+      "bytes": 19525918,
+      "git_blob_sha1": "2a6319d5417cf9e7d36e0658a82cc9667eb81045"
+    },
+    {
+      "path": "data/system-9.csv",
+      "bytes": 19605859,
+      "git_blob_sha1": "c629dc79a131412fc93466d3df77884f522222d5"
+    }
+  ]
+}

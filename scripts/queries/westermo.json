@@ -1,0 +1,25 @@
+{
+  "label": "Westermo infrastructure metrics",
+  "catalog": "westermo",
+  "view": "metrics",
+  "columns": [
+    {"column_name":"system_id", "document_path":"system_id", "sql_type":"VARCHAR"},
+    {"column_name":"elapsed_s", "document_path":"timestamp", "sql_type":"BIGINT"},
+    {"column_name":"load_1m", "document_path":"load_1m", "sql_type":"DOUBLE"},
+    {"column_name":"load_15m", "document_path":"load_15m", "sql_type":"DOUBLE"},
+    {"column_name":"memory_total", "document_path":"sys_mem_total", "sql_type":"BIGINT"},
+    {"column_name":"memory_available", "document_path":"sys_mem_available", "sql_type":"BIGINT"},
+    {"column_name":"cpu_user", "document_path":"cpu_user", "sql_type":"DOUBLE"}
+  ],
+  "window": {"source_column":"system_id", "time_column":"elapsed_s", "signal_column":"load_1m", "width":3600},
+  "queries": [
+    {"id":"W1", "label":"Count all samples", "sql":"SELECT count(*) AS n FROM {{table}}"},
+    {"id":"W2", "label":"Count samples with one-minute load at least 2", "sql":"SELECT count(*) AS n FROM {{table}} WHERE load_1m >= 2.0"},
+    {"id":"W3", "label":"Count samples for one system in a one-hour window", "sql":"SELECT count(*) AS n FROM {{table}} WHERE system_id={{window_source}} AND elapsed_s >= {{window_start}} AND elapsed_s < {{window_end}}"},
+    {"id":"W4", "label":"Count, average, minimum and maximum one-minute load", "sql":"SELECT count(load_1m) AS n, avg(load_1m) AS average, min(load_1m) AS minimum, max(load_1m) AS maximum FROM {{table}}"},
+    {"id":"W5", "label":"Average CPU and available memory per system", "sql":"SELECT system_id, count(*) AS n, avg(cpu_user) AS cpu_user, avg(memory_available) AS memory_available FROM {{table}} GROUP BY system_id ORDER BY system_id"},
+    {"id":"W6", "label":"Average fraction of memory unavailable for allocation", "sql":"SELECT avg(1.0 - memory_available::DOUBLE / memory_total) AS fraction FROM {{table}} WHERE memory_total > 0"},
+    {"id":"W7", "label":"Top five systems by average 15-minute load", "sql":"SELECT system_id, avg(load_15m) AS average FROM {{table}} GROUP BY system_id ORDER BY average DESC NULLS LAST, system_id LIMIT 5"},
+    {"id":"W8", "label":"Project the first 20 high-load samples", "sql":"SELECT system_id, elapsed_s, load_1m, cpu_user FROM {{table}} WHERE load_1m >= 2.0 AND cpu_user > 0.1 ORDER BY system_id, elapsed_s, load_1m, cpu_user LIMIT 20"}
+  ]
+}

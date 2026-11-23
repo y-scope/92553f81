@@ -1,0 +1,1082 @@
+{
+  "status": "passed",
+  "started_at_utc": "20261123T222640.332942Z",
+  "settings": {
+    "dataset": "all",
+    "work_dir": "/home/jack/project/y-scope/92553f81/.work/metrics",
+    "output": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed",
+    "cli": "/home/jack/project/y-scope/92553f81/bin/x86_64/clp-s",
+    "extension": "/home/jack/project/y-scope/92553f81/bin/x86_64/clp_s.duckdb_extension",
+    "cache_mib": 64,
+    "repeats": 7,
+    "warmups": 2,
+    "threads": 8,
+    "workers": 4,
+    "memory_limit": "4GB",
+    "compression_level": 3,
+    "dictionary_level": 9,
+    "target_encoded_mib": 512,
+    "westermo_systems": 19,
+    "can_segments": 0,
+    "can_source": null,
+    "can_tables": "/home/jack/project/y-scope/private-clp-benchmark/.work/datasets/public-can/tables"
+  },
+  "environment": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "python": "3.12.14 (main, Sep  1 2026, 14:16:52) [Clang 22.1.3 ]",
+    "duckdb": "1.5.6",
+    "cpu_count": 16,
+    "load_average": [
+      2.509765625,
+      2.2568359375,
+      1.92138671875
+    ],
+    "packages": {
+      "duckdb": "1.5.6",
+      "numpy": "2.2.6",
+      "cantools": "40.7.1",
+      "pycapnp": "2.2.1"
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "westermo",
+      "label": "Westermo infrastructure metrics",
+      "input": {
+        "files": 19,
+        "bytes": 1042604034,
+        "records": 1640857,
+        "tables": "/home/jack/project/y-scope/92553f81/.work/metrics/westermo/tables-v1",
+        "manifest_sha256": "78961baaddccaca366d8ef83a51144909813fa3578d9b47ad6571e73d69d4631",
+        "scope": "19 Westermo systems"
+      },
+      "compression": {
+        "wall_seconds": 6.159767185803503,
+        "user_seconds": 5.48,
+        "system_seconds": 0.66,
+        "peak_rss_kib": 67632,
+        "exit_code": 0,
+        "archive_bytes": 33820883,
+        "archive_count": 1,
+        "input_bytes": 1042604034,
+        "ratio": 30.82722689410563,
+        "input_mib_per_second": 161.41919968971163,
+        "archives": [
+          {
+            "path": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/westermo/archives/67d8345f-e97e-472d-acad-6c3dfcfb9a04",
+            "bytes": 33820883,
+            "sha256": "62d62b68389bc9097ee65a0fcc2a03ee8ead9c34efcec9e5a336eb7c86558ffe"
+          }
+        ]
+      },
+      "query": {
+        "setup_seconds": 0.04705899115651846,
+        "cache_before_measurement": {
+          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/westermo/decode-cache",
+          "capacity_bytes": 67108864,
+          "used_bytes": 19373,
+          "entry_count": 6,
+          "generation": 9
+        },
+        "cache_after_measurement": {
+          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/westermo/decode-cache",
+          "capacity_bytes": 67108864,
+          "used_bytes": 19373,
+          "entry_count": 6,
+          "generation": 10
+        },
+        "cache_entry_limit_bytes": 4194304,
+        "queries": [
+          {
+            "id": "W1",
+            "label": "Count all samples",
+            "sql": "SELECT count(*) AS n FROM \"westermo\".\"metrics\"",
+            "samples_ms": [
+              0.785998,
+              0.794309,
+              0.759877,
+              0.7017,
+              0.755128,
+              0.78125,
+              0.834678
+            ],
+            "average_ms": 0.7732771428571429,
+            "p50_ms": 0.78125,
+            "p95_ms": 0.8225673,
+            "result": {
+              "columns": [
+                "n"
+              ],
+              "rows": [
+                [
+                  1640857
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W2",
+            "label": "Count samples with one-minute load at least 2",
+            "sql": "SELECT count(*) AS n FROM \"westermo\".\"metrics\" WHERE load_1m >= 2.0",
+            "samples_ms": [
+              0.789561,
+              0.818056,
+              0.853675,
+              0.813307,
+              0.78956,
+              0.800247,
+              0.809745
+            ],
+            "average_ms": 0.810593,
+            "p50_ms": 0.809745,
+            "p95_ms": 0.8429892999999999,
+            "result": {
+              "columns": [
+                "n"
+              ],
+              "rows": [
+                [
+                  2663
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W3",
+            "label": "Count samples for one system in a one-hour window",
+            "sql": "SELECT count(*) AS n FROM \"westermo\".\"metrics\" WHERE system_id='system-1' AND elapsed_s >= 0 AND elapsed_s < 3600",
+            "samples_ms": [
+              0.810932,
+              0.959346,
+              1.12082,
+              0.825179,
+              0.812119,
+              0.819243,
+              0.904729
+            ],
+            "average_ms": 0.8931954285714285,
+            "p50_ms": 0.825179,
+            "p95_ms": 1.0723778,
+            "result": {
+              "columns": [
+                "n"
+              ],
+              "rows": [
+                [
+                  120
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W4",
+            "label": "Count, average, minimum and maximum one-minute load",
+            "sql": "SELECT count(load_1m) AS n, avg(load_1m) AS average, min(load_1m) AS minimum, max(load_1m) AS maximum FROM \"westermo\".\"metrics\"",
+            "samples_ms": [
+              0.764627,
+              1.507883,
+              0.815681,
+              0.960533,
+              0.7765,
+              0.802621,
+              0.759878
+            ],
+            "average_ms": 0.9125318571428571,
+            "p50_ms": 0.802621,
+            "p95_ms": 1.3436779999999997,
+            "result": {
+              "columns": [
+                "n",
+                "average",
+                "minimum",
+                "maximum"
+              ],
+              "rows": [
+                [
+                  1640857,
+                  0.13032043011671396,
+                  0.0,
+                  12.59
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W5",
+            "label": "Average CPU and available memory per system",
+            "sql": "SELECT system_id, count(*) AS n, avg(cpu_user) AS cpu_user, avg(memory_available) AS memory_available FROM \"westermo\".\"metrics\" GROUP BY system_id ORDER BY system_id",
+            "samples_ms": [
+              1.634924,
+              2.384116,
+              1.518568,
+              2.597832,
+              1.494822,
+              1.461577,
+              1.604054
+            ],
+            "average_ms": 1.813699,
+            "p50_ms": 1.604054,
+            "p95_ms": 2.5337172,
+            "result": {
+              "columns": [
+                "system_id",
+                "n",
+                "cpu_user",
+                "memory_available"
+              ],
+              "rows": [
+                [
+                  "system-1",
+                  85749,
+                  0.060740229783512845,
+                  15591988798.12737
+                ],
+                [
+                  "system-10",
+                  86401,
+                  0.06003928305918175,
+                  32492240707.79477
+                ],
+                [
+                  "system-11",
+                  86379,
+                  0.07878007534626011,
+                  5132379715.186701
+                ],
+                [
+                  "system-12",
+                  86401,
+                  0.06697638705197512,
+                  7171294375.761022
+                ],
+                [
+                  "system-13",
+                  86395,
+                  0.05895402045774585,
+                  15645827187.728178
+                ],
+                [
+                  "system-14",
+                  86383,
+                  0.0548922914547293,
+                  7058081161.475939
+                ],
+                [
+                  "system-15",
+                  86401,
+                  0.06272291217045245,
+                  7070629428.106064
+                ],
+                [
+                  "system-16",
+                  86401,
+                  0.06434297604584514,
+                  7072307688.598789
+                ],
+                [
+                  "system-17",
+                  86401,
+                  0.07134145333468231,
+                  5346003779.8066225
+                ],
+                [
+                  "system-18",
+                  86371,
+                  0.056866093694756974,
+                  7120775786.329022
+                ],
+                [
+                  "system-19",
+                  86383,
+                  0.05326421480406065,
+                  7048049898.108285
+                ],
+                [
+                  "system-2",
+                  86393,
+                  0.05330582037965791,
+                  15680988822.655169
+                ],
+                [
+                  "system-3",
+                  86401,
+                  0.036746016079682496,
+                  7054100225.211838
+                ],
+                [
+                  "system-4",
+                  86397,
+                  0.04875592689955235,
+                  7104563717.398706
+                ],
+                [
+                  "system-5",
+                  86401,
+                  0.07700523543468771,
+                  32482764560.192406
+                ],
+                [
+                  "system-6",
+                  86401,
+                  0.026792143538014693,
+                  15765740583.786205
+                ],
+                [
+                  "system-7",
+                  86401,
+                  0.04672070565875109,
+                  7021830634.566174
+                ],
+                [
+                  "system-8",
+                  86397,
+                  0.05350955075670719,
+                  5226578191.653877
+                ],
+                [
+                  "system-9",
+                  86401,
+                  0.05645024038545633,
+                  15484201231.190935
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W6",
+            "label": "Average fraction of memory unavailable for allocation",
+            "sql": "SELECT avg(1.0 - memory_available::DOUBLE / memory_total) AS fraction FROM \"westermo\".\"metrics\" WHERE memory_total > 0",
+            "samples_ms": [
+              58.029725,
+              67.734789,
+              67.667112,
+              60.010157,
+              58.340801,
+              58.400166,
+              59.86293
+            ],
+            "average_ms": 61.435097142857146,
+            "p50_ms": 59.86293,
+            "p95_ms": 67.7144859,
+            "result": {
+              "columns": [
+                "fraction"
+              ],
+              "rows": [
+                [
+                  0.10239304465054859
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W7",
+            "label": "Top five systems by average 15-minute load",
+            "sql": "SELECT system_id, avg(load_15m) AS average FROM \"westermo\".\"metrics\" GROUP BY system_id ORDER BY average DESC NULLS LAST, system_id LIMIT 5",
+            "samples_ms": [
+              2.308129,
+              1.251424,
+              2.423297,
+              1.264484,
+              2.17515,
+              1.249049,
+              2.084915
+            ],
+            "average_ms": 1.8223497142857144,
+            "p50_ms": 2.084915,
+            "p95_ms": 2.3887465999999997,
+            "result": {
+              "columns": [
+                "system_id",
+                "average"
+              ],
+              "rows": [
+                [
+                  "system-11",
+                  0.17734078884916532
+                ],
+                [
+                  "system-17",
+                  0.14364845314291605
+                ],
+                [
+                  "system-8",
+                  0.13475641515333123
+                ],
+                [
+                  "system-14",
+                  0.12439843487723974
+                ],
+                [
+                  "system-5",
+                  0.11785500167824702
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "W8",
+            "label": "Project the first 20 high-load samples",
+            "sql": "SELECT system_id, elapsed_s, load_1m, cpu_user FROM \"westermo\".\"metrics\" WHERE load_1m >= 2.0 AND cpu_user > 0.1 ORDER BY system_id, elapsed_s, load_1m, cpu_user LIMIT 20",
+            "samples_ms": [
+              1.182559,
+              1.022273,
+              1.365405,
+              1.08995,
+              1.287043,
+              1.084013,
+              1.276357
+            ],
+            "average_ms": 1.1867999999999999,
+            "p50_ms": 1.182559,
+            "p95_ms": 1.3418964,
+            "result": {
+              "columns": [
+                "system_id",
+                "elapsed_s",
+                "load_1m",
+                "cpu_user"
+              ],
+              "rows": [
+                [
+                  "system-1",
+                  23610,
+                  2.05,
+                  0.2100000000002182
+                ],
+                [
+                  "system-1",
+                  67410,
+                  2.25,
+                  0.3600000000005821
+                ],
+                [
+                  "system-1",
+                  167490,
+                  2.04,
+                  0.2540000000008149
+                ],
+                [
+                  "system-1",
+                  680400,
+                  2.02,
+                  0.2294999999998253
+                ],
+                [
+                  "system-1",
+                  786720,
+                  2.09,
+                  0.256499999999869
+                ],
+                [
+                  "system-1",
+                  880560,
+                  2.76,
+                  0.2990000000001601
+                ],
+                [
+                  "system-1",
+                  886800,
+                  2.03,
+                  0.1139999999995779
+                ],
+                [
+                  "system-1",
+                  1005660,
+                  2.55,
+                  0.1530000000002474
+                ],
+                [
+                  "system-1",
+                  1199550,
+                  2.65,
+                  0.4555000000000291
+                ],
+                [
+                  "system-1",
+                  1199580,
+                  2.21,
+                  0.4639999999999418
+                ],
+                [
+                  "system-1",
+                  1299630,
+                  2.07,
+                  0.3119999999995343
+                ],
+                [
+                  "system-1",
+                  1628880,
+                  2.34,
+                  0.2695000000000007
+                ],
+                [
+                  "system-1",
+                  1635120,
+                  2.63,
+                  0.1220000000000013
+                ],
+                [
+                  "system-1",
+                  1822770,
+                  2.12,
+                  0.1775000000000204
+                ],
+                [
+                  "system-1",
+                  1829040,
+                  2.05,
+                  0.2535000000000423
+                ],
+                [
+                  "system-1",
+                  2070750,
+                  5.06,
+                  0.1754999999999654
+                ],
+                [
+                  "system-1",
+                  2070780,
+                  3.07,
+                  0.2775000000000318
+                ],
+                [
+                  "system-1",
+                  2173050,
+                  2.03,
+                  0.2895000000000437
+                ],
+                [
+                  "system-1",
+                  2210580,
+                  2.06,
+                  0.4750000000001364
+                ],
+                [
+                  "system-1",
+                  2210610,
+                  2.04,
+                  0.1189999999999145
+                ]
+              ]
+            },
+            "validated": true
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "can",
+      "label": "Public RAV4 CAN signals",
+      "input": {
+        "files": 54,
+        "bytes": 3775789746,
+        "records": 27400285,
+        "tables": "/home/jack/project/y-scope/private-clp-benchmark/.work/datasets/public-can/tables",
+        "manifest_sha256": "80ae4eb94a27cbafd159e8e4d5fe8bb487ae9ad2dd0c275dff0bb4112599e373",
+        "scope": "382 CAN segments"
+      },
+      "compression": {
+        "wall_seconds": 28.60833045328036,
+        "user_seconds": 25.78,
+        "system_seconds": 2.81,
+        "peak_rss_kib": 89492,
+        "exit_code": 0,
+        "archive_bytes": 52264096,
+        "archive_count": 4,
+        "input_bytes": 3775789746,
+        "ratio": 72.2444284887277,
+        "input_mib_per_second": 125.86801284299993,
+        "archives": [
+          {
+            "path": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/archives/454870e0-263d-4283-9127-8e9b4c19ed47",
+            "bytes": 22386776,
+            "sha256": "ebc96f404ad1b1f1d6f91b78dae15d71f6ef49ebda992fc115cf77d1b9cb981c"
+          },
+          {
+            "path": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/archives/c5486f46-7482-4d86-8f94-750b39b6bbb1",
+            "bytes": 10333189,
+            "sha256": "311d92324f897a99c81e6ce7b56611588e3a370504ed8d58c3bd120a57fe5138"
+          },
+          {
+            "path": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/archives/d9c9eddd-13a8-43a0-a186-7abc4389bf30",
+            "bytes": 6232529,
+            "sha256": "1cac292590c7f2403b402420175e16e76a67966415485f640d91c92ec0d7bd4c"
+          },
+          {
+            "path": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/archives/f26bf359-5114-40d4-bbc4-2f025607478a",
+            "bytes": 13311602,
+            "sha256": "96d1a1cd6e17c0455ba5e68fee2d04911b4028b91dc3d749bd0d38a24ed9205b"
+          }
+        ]
+      },
+      "query": {
+        "setup_seconds": 0.5169935021549463,
+        "cache_before_measurement": {
+          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/decode-cache",
+          "capacity_bytes": 67108864,
+          "used_bytes": 36298,
+          "entry_count": 39,
+          "generation": 42
+        },
+        "cache_after_measurement": {
+          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/decode-cache",
+          "capacity_bytes": 67108864,
+          "used_bytes": 36298,
+          "entry_count": 39,
+          "generation": 43
+        },
+        "cache_entry_limit_bytes": 4194304,
+        "queries": [
+          {
+            "id": "S1",
+            "label": "Count frames containing front-right wheel speed",
+            "sql": "SELECT count(*) AS n FROM \"can\".\"signals\" WHERE WHEEL_SPEED_FR IS NOT NULL",
+            "samples_ms": [
+              1.391526,
+              1.624238,
+              3.05732,
+              0.926101,
+              1.662232,
+              0.757503,
+              1.630175
+            ],
+            "average_ms": 1.578442142857143,
+            "p50_ms": 1.624238,
+            "p95_ms": 2.6387935999999987,
+            "result": {
+              "columns": [
+                "n"
+              ],
+              "rows": [
+                [
+                  1896763
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S2",
+            "label": "Count front-right wheel speeds at least 100km/h",
+            "sql": "SELECT count(*) AS n FROM \"can\".\"signals\" WHERE WHEEL_SPEED_FR >= 100.0",
+            "samples_ms": [
+              1.111321,
+              0.819243,
+              0.99734,
+              0.840614,
+              1.308414,
+              0.832303,
+              1.009213
+            ],
+            "average_ms": 0.9883497142857143,
+            "p50_ms": 0.99734,
+            "p95_ms": 1.2492861,
+            "result": {
+              "columns": [
+                "n"
+              ],
+              "rows": [
+                [
+                  907075
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S3",
+            "label": "Count wheel-speed frames for one segment in a one-second window",
+            "sql": "SELECT count(*) AS n FROM \"can\".\"signals\" WHERE WHEEL_SPEED_FR IS NOT NULL AND source_file='rav4_c01_s0001' AND ts >= 9734164 AND ts < 9735164",
+            "samples_ms": [
+              1.130318,
+              1.084013,
+              1.289417,
+              1.122007,
+              1.177811,
+              1.05433,
+              1.173061
+            ],
+            "average_ms": 1.1472795714285713,
+            "p50_ms": 1.130318,
+            "p95_ms": 1.2559352,
+            "result": {
+              "columns": [
+                "n"
+              ],
+              "rows": [
+                [
+                  83
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S4",
+            "label": "Count, average, minimum and maximum wheel speed",
+            "sql": "SELECT count(WHEEL_SPEED_FR) AS n, avg(WHEEL_SPEED_FR) AS average, min(WHEEL_SPEED_FR) AS minimum, max(WHEEL_SPEED_FR) AS maximum FROM \"can\".\"signals\"",
+            "samples_ms": [
+              0.875047,
+              0.835865,
+              0.812119,
+              0.923726,
+              0.883357,
+              0.857237,
+              1.073328
+            ],
+            "average_ms": 0.8943827142857143,
+            "p50_ms": 0.875047,
+            "p95_ms": 1.0284474,
+            "result": {
+              "columns": [
+                "n",
+                "average",
+                "minimum",
+                "maximum"
+              ],
+              "rows": [
+                [
+                  1896763,
+                  81.98568709427616,
+                  0.0,
+                  132.08999999999997
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S5",
+            "label": "Sum products of front-left and front-right wheel speeds",
+            "sql": "SELECT sum(WHEEL_SPEED_FR*WHEEL_SPEED_FL) AS value FROM \"can\".\"signals\"",
+            "samples_ms": [
+              0.797872,
+              0.775313,
+              0.841802,
+              0.801434,
+              0.764627,
+              0.820431,
+              0.895231
+            ],
+            "average_ms": 0.8138157142857143,
+            "p50_ms": 0.801434,
+            "p95_ms": 0.8792023,
+            "result": {
+              "columns": [
+                "value"
+              ],
+              "rows": [
+                [
+                  15361045528.796984
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S6",
+            "label": "Ratio of product sum to rear-right wheel-speed sum",
+            "sql": "SELECT sum(WHEEL_SPEED_FR*WHEEL_SPEED_FL)/nullif(sum(WHEEL_SPEED_RR),0)*100 AS value FROM \"can\".\"signals\"",
+            "samples_ms": [
+              0.879796,
+              0.848926,
+              0.888107,
+              1.003277,
+              0.847739,
+              0.88217,
+              0.89998
+            ],
+            "average_ms": 0.8928564285714286,
+            "p50_ms": 0.88217,
+            "p95_ms": 0.9722878999999999,
+            "result": {
+              "columns": [
+                "value"
+              ],
+              "rows": [
+                [
+                  9898.768707413865
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S7",
+            "label": "Maximum minus minimum front-right wheel speed",
+            "sql": "SELECT max(WHEEL_SPEED_FR)-min(WHEEL_SPEED_FR) AS value FROM \"can\".\"signals\"",
+            "samples_ms": [
+              0.943911,
+              0.84299,
+              0.815681,
+              0.884545,
+              0.832304,
+              0.871484,
+              0.819243
+            ],
+            "average_ms": 0.858594,
+            "p50_ms": 0.84299,
+            "p95_ms": 0.9261012,
+            "result": {
+              "columns": [
+                "value"
+              ],
+              "rows": [
+                [
+                  132.08999999999997
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S8",
+            "label": "Ratio of sums for one segment in a one-second window",
+            "sql": "SELECT sum(WHEEL_SPEED_FR*WHEEL_SPEED_FL)/nullif(sum(WHEEL_SPEED_RR),0)*100 AS value FROM \"can\".\"signals\" WHERE source_file='rav4_c01_s0001' AND ts >= 9734164 AND ts < 9735164",
+            "samples_ms": [
+              1.171874,
+              1.249049,
+              1.124381,
+              1.402212,
+              1.122007,
+              1.33691,
+              1.122007
+            ],
+            "average_ms": 1.2183485714285716,
+            "p50_ms": 1.171874,
+            "p95_ms": 1.3826214,
+            "result": {
+              "columns": [
+                "value"
+              ],
+              "rows": [
+                [
+                  12052.243415317203
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S9",
+            "label": "Top five segments by wheel-speed frame count",
+            "sql": "SELECT source_file, count(*) AS n FROM \"can\".\"signals\" WHERE WHEEL_SPEED_FR IS NOT NULL GROUP BY source_file ORDER BY n DESC, source_file LIMIT 5",
+            "samples_ms": [
+              1.516193,
+              2.29863,
+              1.646798,
+              2.648886,
+              1.532815,
+              2.641762,
+              1.771465
+            ],
+            "average_ms": 2.0080784285714284,
+            "p50_ms": 1.771465,
+            "p95_ms": 2.6467488,
+            "result": {
+              "columns": [
+                "source_file",
+                "n"
+              ],
+              "rows": [
+                [
+                  "rav4_c01_s0093",
+                  4976
+                ],
+                [
+                  "rav4_c01_s0179",
+                  4976
+                ],
+                [
+                  "rav4_c01_s0182",
+                  4976
+                ],
+                [
+                  "rav4_c02_s0239",
+                  4976
+                ],
+                [
+                  "rav4_c01_s0010",
+                  4975
+                ]
+              ]
+            },
+            "validated": true
+          },
+          {
+            "id": "S10",
+            "label": "Project the first 20 wheel-speed frames",
+            "sql": "SELECT source_file, ts, WHEEL_SPEED_FR, WHEEL_SPEED_FL FROM \"can\".\"signals\" WHERE WHEEL_SPEED_FR IS NOT NULL ORDER BY source_file, ts, WHEEL_SPEED_FR, WHEEL_SPEED_FL LIMIT 20",
+            "samples_ms": [
+              196.836828,
+              180.552886,
+              196.477073,
+              190.85754,
+              194.406407,
+              187.997313,
+              198.253288
+            ],
+            "average_ms": 192.19733357142857,
+            "p50_ms": 194.406407,
+            "p95_ms": 197.82835,
+            "result": {
+              "columns": [
+                "source_file",
+                "ts",
+                "WHEEL_SPEED_FR",
+                "WHEEL_SPEED_FL"
+              ],
+              "rows": [
+                [
+                  "rav4_c01_s0001",
+                  9734164,
+                  120.3,
+                  120.17999999999999
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734180,
+                  120.29,
+                  120.32000000000001
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734191,
+                  120.28000000000002,
+                  120.64
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734204,
+                  120.38000000000001,
+                  120.42
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734213,
+                  120.54,
+                  120.33999999999999
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734230,
+                  120.35000000000001,
+                  120.3
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734241,
+                  120.33,
+                  120.22000000000001
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734248,
+                  120.3,
+                  120.66000000000001
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734260,
+                  120.39,
+                  120.61
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734276,
+                  120.49,
+                  120.30999999999999
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734287,
+                  120.63000000000001,
+                  120.33999999999999
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734303,
+                  120.41000000000001,
+                  120.26
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734309,
+                  120.47000000000001,
+                  120.51
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734326,
+                  120.51,
+                  120.66000000000001
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734337,
+                  120.72000000000001,
+                  120.39
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734352,
+                  120.69000000000001,
+                  120.45
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734358,
+                  120.35000000000001,
+                  120.39
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734375,
+                  120.41000000000001,
+                  120.46
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734385,
+                  120.39999999999999,
+                  120.73
+                ],
+                [
+                  "rav4_c01_s0001",
+                  9734396,
+                  120.58999999999999,
+                  120.50000000000001
+                ]
+              ]
+            },
+            "validated": true
+          }
+        ]
+      }
+    }
+  ],
+  "code_sha256": {
+    "scripts/benchmark_metrics.py": "922dffa7471a5739b09da12b13f40c6de99afe0333d2e1e4e8e91394e17fd36d",
+    "scripts/datasets/convert_public_can.py": "38408ffdc33ccc0b64333ce0377e42f3d5b1d58ea7f9d190ab9933bbe2d70d75",
+    "scripts/datasets/download_public_can.py": "05bd4bb281c9aae0aa70bc9d03f920ac78778f8b104beaecfbfb523bc2733fa7",
+    "scripts/datasets/prepare_westermo.py": "54cf59cde36524c811ddd2708a71ee469f7d520025e0bf36ccff5c40cb6c37f8",
+    "scripts/datasets/westermo-source.json": "04c1f166888756d6b53ea7abdd0258b163cbbfd0c1010aa91c69ee5dccec772c",
+    "scripts/queries/can.json": "6632af18bda6018691dc9a8f48e017c4f601efb410809e1a9a4f82fe65abcc69",
+    "scripts/queries/westermo.json": "38b98d5f492a94f0e271d6cab39f48825cb82b141d702d4323fb482266084603",
+    "scripts/requirements-metrics.txt": "bb14675a963c33807de3dc173be96fcd65cdb8645ea29115e37ed753926a4951",
+    "scripts/test_metrics.py": "434ded2d3973d0bb280dbb9a35acb0f8d2380653975cf673ce0fd0bbaeafda18"
+  },
+  "binaries": {
+    "cli_version": "clp-s 1.0.0-xp",
+    "cli_sha256": "b5adf7c5e85337cb9590a72df044e73227c86e177f2cc78da0ad096315f32160",
+    "extension_sha256": "a1140dc61845384e4a8a0cf47a18c6981f394cca8747e9dd88b2ab705e5827da"
+  }
+}

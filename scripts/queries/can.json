@@ -1,0 +1,26 @@
+{
+  "label": "Public RAV4 CAN signals",
+  "catalog": "can",
+  "view": "signals",
+  "columns": [
+    {"column_name":"ts", "document_path":"ts", "sql_type":"BIGINT"},
+    {"column_name":"source_file", "document_path":"source_file", "sql_type":"VARCHAR"},
+    {"column_name":"channel_id", "document_path":"channel_id", "sql_type":"BIGINT"},
+    {"column_name":"WHEEL_SPEED_FR", "document_path":"WHEEL_SPEED_FR", "sql_type":"DOUBLE"},
+    {"column_name":"WHEEL_SPEED_FL", "document_path":"WHEEL_SPEED_FL", "sql_type":"DOUBLE"},
+    {"column_name":"WHEEL_SPEED_RR", "document_path":"WHEEL_SPEED_RR", "sql_type":"DOUBLE"}
+  ],
+  "window": {"source_column":"source_file", "time_column":"ts", "signal_column":"WHEEL_SPEED_FR", "width":1000},
+  "queries": [
+    {"id":"S1", "label":"Count frames containing front-right wheel speed", "sql":"SELECT count(*) AS n FROM {{table}} WHERE WHEEL_SPEED_FR IS NOT NULL"},
+    {"id":"S2", "label":"Count front-right wheel speeds at least 100km/h", "sql":"SELECT count(*) AS n FROM {{table}} WHERE WHEEL_SPEED_FR >= 100.0"},
+    {"id":"S3", "label":"Count wheel-speed frames for one segment in a one-second window", "sql":"SELECT count(*) AS n FROM {{table}} WHERE WHEEL_SPEED_FR IS NOT NULL AND source_file={{window_source}} AND ts >= {{window_start}} AND ts < {{window_end}}"},
+    {"id":"S4", "label":"Count, average, minimum and maximum wheel speed", "sql":"SELECT count(WHEEL_SPEED_FR) AS n, avg(WHEEL_SPEED_FR) AS average, min(WHEEL_SPEED_FR) AS minimum, max(WHEEL_SPEED_FR) AS maximum FROM {{table}}"},
+    {"id":"S5", "label":"Sum products of front-left and front-right wheel speeds", "sql":"SELECT sum(WHEEL_SPEED_FR*WHEEL_SPEED_FL) AS value FROM {{table}}"},
+    {"id":"S6", "label":"Ratio of product sum to rear-right wheel-speed sum", "sql":"SELECT sum(WHEEL_SPEED_FR*WHEEL_SPEED_FL)/nullif(sum(WHEEL_SPEED_RR),0)*100 AS value FROM {{table}}"},
+    {"id":"S7", "label":"Maximum minus minimum front-right wheel speed", "sql":"SELECT max(WHEEL_SPEED_FR)-min(WHEEL_SPEED_FR) AS value FROM {{table}}"},
+    {"id":"S8", "label":"Ratio of sums for one segment in a one-second window", "sql":"SELECT sum(WHEEL_SPEED_FR*WHEEL_SPEED_FL)/nullif(sum(WHEEL_SPEED_RR),0)*100 AS value FROM {{table}} WHERE source_file={{window_source}} AND ts >= {{window_start}} AND ts < {{window_end}}"},
+    {"id":"S9", "label":"Top five segments by wheel-speed frame count", "sql":"SELECT source_file, count(*) AS n FROM {{table}} WHERE WHEEL_SPEED_FR IS NOT NULL GROUP BY source_file ORDER BY n DESC, source_file LIMIT 5"},
+    {"id":"S10", "label":"Project the first 20 wheel-speed frames", "sql":"SELECT source_file, ts, WHEEL_SPEED_FR, WHEEL_SPEED_FL FROM {{table}} WHERE WHEEL_SPEED_FR IS NOT NULL ORDER BY source_file, ts, WHEEL_SPEED_FR, WHEEL_SPEED_FL LIMIT 20"}
+  ]
+}
