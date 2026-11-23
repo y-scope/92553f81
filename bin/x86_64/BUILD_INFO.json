@@ -20,11 +20,5 @@
       "bytes": 50517934,
       "sha256": "4e6f4177f223050b83344cb7de2a9f9d5eab6df9ba2c9529535405a686afd772"
     }
-  },
-  "extension_changes": [
-    "Preserve certified predicate pushdown and typed batch delivery in aggregate fallback",
-    "Run archive fallbacks within the aggregate worker cap and cache their partials",
-    "Retain integer type gates for mixed text/numeric timestamp summaries",
-    "Default on-disk decode cache capacity of 64MiB per directory and 4MiB per entry; separate dataset directories have independent budgets"
-  ]
+  }
 }

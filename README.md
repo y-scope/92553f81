@@ -2,7 +2,18 @@
 
 Download public infrastructure metrics and vehicle CAN signals, compress them with CLP, and run validated SQL queries through DuckDB catalogs.
 
-Read the [benchmark report](docs/metrics-benchmark.md) for compression, memory use and all 18 query results on the full prepared datasets, with exact SQL in the appendix.
+## Benchmark summary
+
+Measured on November 23, 2026, using the full prepared datasets: 1,640,857 Westermo samples and 27,400,285 public CAN frames.
+
+| Dataset | JSONL input | CLP size (compression ratio) | Compression time | Peak compression RSS |
+|---|---:|---:|---:|---:|
+| Westermo infrastructure metrics | 994.3MiB | 32.3MiB (30.8×) | 6.2s | 66.0MiB |
+| Public CAN signals | 3,600.9MiB | 49.8MiB (72.2×) | 28.6s | 87.4MiB |
+
+**Query performance:** 16 of 18 queries have P50 latency between **0.8ms and 2.1ms**. The other two compute a memory ratio across all samples (**59.9ms**) and retrieve the first 20 CAN frames in source/time/speed order (**194.4ms**). All query results were checked against the source JSONL.
+
+Compression ratios compare total JSONL bytes with total archive bytes. P50 is the median query latency across seven measured passes after two untimed passes. Query timing excludes startup and catalog setup. See the [full benchmark report](docs/metrics-benchmark.md) for dataset coverage, measurement details, all query timings and exact SQL.
 
 ## Run
 
@@ -10,11 +21,16 @@ Read the [benchmark report](docs/metrics-benchmark.md) for compression, memory u
 
 Use Linux x86_64 with Python 3.11 or 3.12, virtual-environment support and GNU `time` installed. Run from this repository's root:
 
+These instructions use the **official DuckDB Python client**, which includes the DuckDB engine. The requirements file installs **`duckdb==1.5.6`**, the exact version required by the bundled CLP extension, along with the dataset preparation dependencies. No separate DuckDB CLI or database server is needed.
+
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -r scripts/requirements-metrics.txt
+.venv/bin/python -c "import duckdb; print(duckdb.__version__)"  # Expected: 1.5.6
 .venv/bin/python scripts/benchmark_metrics.py
 ```
+
+If you only want to query your own CLP archives, create the virtual environment as above and install just the matching client with `.venv/bin/python -m pip install duckdb==1.5.6`.
 
 The runner downloads and prepares both datasets, reports compression ratio, speed and peak memory, then measures query latency using catalogs with typed views. DuckDB startup, extension loading, catalog setup and warm-up are outside query timing.
 

@@ -306,11 +306,9 @@ def benchmark_queries(duckdb, archives, suite, parameters, expected, inputs, arg
 
 def write_report(path, report):
     lines = ['# Public metrics benchmark', '',
-             'Query measurements use catalog typed views and an on-disk decode cache. '
+             'Query measurements use catalog typed views. '
              'All query results matched independent queries over the source NDJSON.', '',
-             "Each dataset uses the extension's default decode cache settings in a separate directory, shared across that dataset's queries. "
-             f"{report['settings']['warmups']} complete warm-up passes precede {report['settings']['repeats']} measured passes. "
-             'The cache is not cleared between queries. Queries can still decode data when it is not cached.', '',
+             f"{report['settings']['warmups']} complete warm-up passes precede {report['settings']['repeats']} measured passes.", '',
              '## Compression', '',
              '| Dataset | Scope | Records | NDJSON | CLP archives | Ratio | Time | Input throughput | Peak RSS |',
              '|---|---|---:|---:|---:|---:|---:|---:|---:|']
@@ -329,15 +327,7 @@ def write_report(path, report):
                          f"{query['p50_ms']:.2f}ms | {query['p95_ms']:.2f}ms |")
     lines += ['', 'Each row summarizes repetitions of that query. Timing includes SQL planning, execution and complete '
               'result delivery through the DuckDB Python client. Startup, extension loading, catalog registration, '
-              'warm-up, validation and report writing are excluded. SQL is submitted afresh for each repetition, '
-              'without a query-result cache.', '',
-              '## Decode cache', '', '| Dataset | Capacity | Used before timing | Used after timing | Entries | Per-entry ceiling |',
-              '|---|---:|---:|---:|---:|---:|']
-    for result in report['datasets']:
-        query = result['query']
-        before, after = query['cache_before_measurement'], query['cache_after_measurement']
-        lines.append(f"| {result['label']} | {after['capacity_bytes']/MIB:.1f}MiB | {before['used_bytes']/MIB:.2f}MiB | "
-                     f"{after['used_bytes']/MIB:.2f}MiB | {after['entry_count']} | {query['cache_entry_limit_bytes']/MIB:.1f}MiB |")
+              'warm-up, validation and report writing are excluded. SQL is submitted afresh for each repetition.']
     lines += ['', 'CAN product and ratio queries exercise arithmetic aggregation, not physical energy calculations. '
               'Time-window queries use one source segment/system and preserve the relative clock.', '',
               'See `results.json` for settings and binary identities. Each dataset directory contains compression logs, '

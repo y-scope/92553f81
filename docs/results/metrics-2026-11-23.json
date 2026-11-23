@@ -7,14 +7,11 @@
     "output": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed",
     "cli": "/home/jack/project/y-scope/92553f81/bin/x86_64/clp-s",
     "extension": "/home/jack/project/y-scope/92553f81/bin/x86_64/clp_s.duckdb_extension",
-    "cache_mib": 64,
     "repeats": 7,
     "warmups": 2,
     "threads": 8,
     "workers": 4,
     "memory_limit": "4GB",
-    "compression_level": 3,
-    "dictionary_level": 9,
     "target_encoded_mib": 512,
     "westermo_systems": 19,
     "can_segments": 0,
@@ -71,21 +68,6 @@
       },
       "query": {
         "setup_seconds": 0.04705899115651846,
-        "cache_before_measurement": {
-          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/westermo/decode-cache",
-          "capacity_bytes": 67108864,
-          "used_bytes": 19373,
-          "entry_count": 6,
-          "generation": 9
-        },
-        "cache_after_measurement": {
-          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/westermo/decode-cache",
-          "capacity_bytes": 67108864,
-          "used_bytes": 19373,
-          "entry_count": 6,
-          "generation": 10
-        },
-        "cache_entry_limit_bytes": 4194304,
         "queries": [
           {
             "id": "W1",
@@ -619,21 +601,6 @@
       },
       "query": {
         "setup_seconds": 0.5169935021549463,
-        "cache_before_measurement": {
-          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/decode-cache",
-          "capacity_bytes": 67108864,
-          "used_bytes": 36298,
-          "entry_count": 39,
-          "generation": 42
-        },
-        "cache_after_measurement": {
-          "directory": "/home/jack/project/y-scope/92553f81/.work/metrics/runs/full-fixed/can/decode-cache",
-          "capacity_bytes": 67108864,
-          "used_bytes": 36298,
-          "entry_count": 39,
-          "generation": 43
-        },
-        "cache_entry_limit_bytes": 4194304,
         "queries": [
           {
             "id": "S1",

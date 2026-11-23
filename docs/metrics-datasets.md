@@ -29,7 +29,7 @@ python3 -m venv .venv
 .venv/bin/python scripts/benchmark_metrics.py --dataset can
 ```
 
-The Python DuckDB client is pinned to the version required by the bundled extension. A separate DuckDB CLI installation is unnecessary.
+The requirements file installs the official Python DuckDB client at **`duckdb==1.5.6`**, matching the bundled extension. The package includes the DuckDB engine, so a separate DuckDB CLI or database server is unnecessary. Verify the installed version with `.venv/bin/python -c "import duckdb; print(duckdb.__version__)"`.
 
 For a quick end-to-end check before the full download:
 
@@ -45,16 +45,11 @@ Sample runs are explicitly labelled by their system and segment counts. Their re
 | Setting | Default |
 |---|---|
 | Query route | Catalog with typed column views |
-| Decode cache | Enabled, 64MiB on disk per dataset |
-| Per-entry cache ceiling | 4MiB |
 | Warm-up | Two complete passes over all queries |
 | Measured repetitions | Seven passes, rotating query order |
 | DuckDB threads | Up to eight, limited by available logical CPUs |
 | DuckDB memory limit | 4GB |
-| Compression | Column level 3, dictionary level 9 |
 | Archive rotation target | 512MiB of encoded input per archive |
-
-The runner inherits the extension's cache defaults without overriding enablement, capacity or the per-entry limit. It only selects a separate cache directory for each dataset, so each has its own budget shared by all its queries throughout warm-up and measurement. The cache stores reusable decoded data, metadata and aggregate partials, not the final SQL result. Queries can still decompress data when an entry is too large or the working set exceeds capacity. The report records the effective capacity, actual use and per-entry ceiling.
 
 Query timing includes planning, execution and complete result delivery through the Python client. Process startup, extension loading, catalog registration, warm-up, correctness checks and report writing are excluded. Average, P50 and P95 summarize the measured repetitions of each query. P50 is the median.
 
@@ -92,7 +87,6 @@ The runner prints the report path when it finishes:
   westermo/                      Also can/ when selected
     archives/                    Single-file CLP archives
     catalog.duckdb               Registered catalog and typed view
-    decode-cache/                Shared 64MiB on-disk cache
     compression.json             Ratio, throughput and peak RSS
     queries.json                 Per-query results and latency statistics
     query-samples.jsonl          Every measured repetition

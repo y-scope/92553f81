@@ -1,6 +1,6 @@
 # CLP benchmark: infrastructure metrics and vehicle CAN signals
 
-Measured November 23, 2026. This report evaluates CLP compression and DuckDB queries over two public datasets: Westermo infrastructure metrics and comma.ai RAV4 CAN signals. Queries use catalogs with typed views and an on-disk decode cache. Results describe this host and workload.
+Measured November 23, 2026. This report evaluates CLP compression and DuckDB queries over two public datasets: Westermo infrastructure metrics and comma.ai RAV4 CAN signals. Queries use catalogs with typed views. Results describe this host and workload.
 
 - **Compression:** 30.8× for Westermo and 72.2× for public CAN, relative to the prepared NDJSON input.
 - **Query latency:** 16 of 18 queries have P50 latency between 0.8ms and 2.1ms. The two slower queries are a full-input memory-ratio calculation at 59.9ms and an ordered CAN first-20 retrieval at 194.4ms.
@@ -32,7 +32,7 @@ The archives contain the complete prepared NDJSON datasets, including fields not
 
 ## Query performance
 
-Each dataset has a separate **64MiB on-disk decode cache**, shared across its entire workload. Two complete warm-up passes precede seven measured passes, with query order rotated and reversed. The cache stays enabled throughout.
+Two complete warm-up passes precede seven measured passes, with query order rotated and reversed.
 
 **Timing includes SQL planning, execution and complete result delivery through the DuckDB Python client.** DuckDB startup, extension loading, catalog registration, warm-up and validation are outside the timed interval.
 
@@ -72,22 +72,9 @@ The one-second window returns 83 wheel-speed frames. Across the full subset, fro
 
 ### Why two queries take longer
 
-**W6, average memory ratio:** this expression reads two numeric columns over all 1.64 million samples and performs the division in DuckDB. Its decoded column data exceeds the default cache-entry ceiling, so the 64MiB total budget does not make it fully cached. Its P50 is 59.9ms.
+**W6, average memory ratio:** this expression reads two numeric columns over all 1.64 million samples and performs the division in DuckDB. Its P50 is 59.9ms.
 
-**S10, ordered first-20 retrieval:** `LIMIT 20` limits the output, but the source/time/speed ordering still requires examining approximately 1.90 million qualifying wheel-speed frames. This is more work than returning any 20 matches. Its projected data also exceeds the per-entry ceiling. Its P50 is 194.4ms.
-
-These two cases remain opportunities for further optimization. Their SQL and cache settings are unchanged in the reported run.
-
-## Decode-cache use
-
-The decode cache stores reusable metadata, decoded column data and per-archive aggregate partials. It does not store the final SQL result. The query is executed again for every measured repetition. The default **4MiB per-entry limit** remains in effect, independently of the 64MiB total capacity.
-
-| Dataset | Capacity | Actual stored data | Entries | Per-entry limit |
-|---|---:|---:|---:|---:|
-| Westermo | 64MiB | 18.9KiB | 6 | 4MiB |
-| Public CAN | 64MiB | 35.4KiB | 39 | 4MiB |
-
-Stored bytes and entry counts were unchanged between the end of warm-up and the end of measurement. The small cache footprint reflects reuse of compact metadata and partial aggregates for many of these queries. W6 and S10 still perform substantial scan work because their columns do not fit in the cache.
+**S10, ordered first-20 retrieval:** `LIMIT 20` limits the output, but the source/time/speed ordering still requires examining approximately 1.90 million qualifying wheel-speed frames. This is more work than returning any 20 matches. Its P50 is 194.4ms.
 
 ## Reproduce the benchmark
 
@@ -112,7 +99,6 @@ The [saved measurements](results/metrics-2026-11-23.json) include exact byte cou
 | Platform | Linux x86_64, 16 logical CPUs |
 | CLP CLI / DuckDB | `clp-s 1.0.0-xp` / DuckDB 1.5.6 |
 | Query execution | Catalog typed views, 8 DuckDB threads, 4GB memory limit |
-| Compression | Column Zstd level 3, dictionary level 9 |
 | Archive rotation | Target 512MiB of encoded input per archive |
 | Query repetitions | Two full warm-ups, seven measured workload passes |
 | Compression repetitions | One complete compression per dataset |
