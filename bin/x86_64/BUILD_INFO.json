@@ -1,5 +1,5 @@
 {
-  "built_on_utc": "2026-11-23",
+  "built_on_utc": "2026-11-24",
   "platform": "linux_x86_64",
   "glibc_minimum": "2.28",
   "cli_version": "clp-s 1.0.0-xp",
@@ -17,8 +17,13 @@
       "sha256": "b5adf7c5e85337cb9590a72df044e73227c86e177f2cc78da0ad096315f32160"
     },
     "clp_s.duckdb_extension": {
-      "bytes": 50517934,
-      "sha256": "4e6f4177f223050b83344cb7de2a9f9d5eab6df9ba2c9529535405a686afd772"
+      "bytes": 50660582,
+      "sha256": "4767f9a7fddc113946a283bf10a5eef73bd33737b38ab50feac033d2b9079ffb",
+      "source_revisions": {
+        "engine": "720ff26a6ae013fea91c1686a1f1319efcd29ca0",
+        "duckdb_integration": "7324583cdd5e066e623bd29b8659495225f3c864",
+        "uncommitted_changes_included": false
+      }
     }
   }
 }

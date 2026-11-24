@@ -200,6 +200,26 @@ LIMIT 5;
 
 CAN's `ts` is relative milliseconds. Restrict time-window queries to a `source_file` so unrelated device clocks are not mixed. The [query appendix](docs/metrics-benchmark.md#appendix) contains all benchmark SQL and selected results. The next section shows how to register your own archives and define your own typed view.
 
+### Group log messages by string shape
+
+For a catalog containing a `message` field, `_shape.message` returns the stored string shape. For example, `Error: Exit code 1` and `Error: Exit code 128` both become `Error: Exit code %int%`:
+
+```sql
+CALL clp_create_catalog('logs');
+CALL clp_register('logs', '/path/to/log/archives');
+
+SELECT _shape.message::VARCHAR AS shape, count(*) AS occurrences
+FROM logs.events
+GROUP BY shape
+ORDER BY occurrences DESC;
+```
+
+`%int%`, `%float%` and `%str%` represent variables. `_shape_all.message` also derives shapes for text stored whole. Both projections work on the default `events` table and typed views, and their paths refer to the original document fields. Add `WHERE` conditions on `_events` fields or typed columns to analyze a subset of records.
+
+Shape grouping with `count(*)`, `SELECT DISTINCT`, and `COUNT(DISTINCT ...)` can use stored summaries instead of scanning events. With timestamp or numeric filters, CLP checks each archive independently: fully matching archives use their summaries, nonmatching archives are skipped, and partially matching or uncertain archives evaluate the filter on their records. This optimization is automatic for both `_shape` and `_shape_all` when the archive contains the required summaries.
+
+Shapes are available for CLP archives. `SELECT *` does not include them. Select a field such as `_shape.message`, rather than the entire `_shape` root.
+
 ## Evaluate your own dataset
 
 Use the environment installed above. The following example takes your JSONL input through compression, catalog registration and query timing. Replace the field names and queries with ones relevant to your workload.
