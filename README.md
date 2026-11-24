@@ -101,32 +101,33 @@ FROM westermo.events
 LIMIT 3;
 ```
 
-Inspect the available document paths and source types before choosing fields to query:
+Discover the schema before choosing fields to query. `clp_schema()` returns one row per field, with `field_path` and `source_types` columns:
 
 ```sql
-SELECT DISTINCT unnest(fields, recursive := true)
-FROM clp_dataset_schemas('westermo')
-ORDER BY ALL;
+SELECT clp_schema()
+FROM westermo.events
+ORDER BY field_path;
 ```
 
-The result has `field_path` and `source_type` columns. `clp_dataset_schemas('westermo')` returns schema information for that catalog. `unnest(fields, recursive := true)` expands its field lists into rows, `DISTINCT` removes duplicates and `ORDER BY ALL` sorts by the returned columns. The `:=` syntax passes a named function argument, here `recursive`. A field can appear with more than one type. To inspect the nested schema structure instead, use:
+The engine automatically merges schemas across the catalog's registered archive files. Each path appears once with its combined source types, including fields found in only some files.
+
+`clp_schema_tree()` returns the same merged schema as one nested VARIANT. Both take zero arguments and use the source in `FROM`:
 
 ```sql
-SELECT schema_tree
-FROM clp_dataset_schemas('westermo');
+SELECT clp_schema_tree() AS schema_tree
+FROM westermo.events;
 ```
 
 Discovery can also describe just the events matching a condition:
 
 ```sql
-SELECT schema_tree, matching_rows
-FROM clp_dataset_schemas('westermo', predicate := $$
-    _events.system_id::VARCHAR = 'system-1'
-    AND _events.load_1m::DOUBLE >= 2
-$$);
+SELECT clp_schema_tree() AS schema_tree
+FROM westermo.events
+WHERE _events.system_id::VARCHAR = 'system-1'
+  AND _events.load_1m::DOUBLE >= 2;
 ```
 
-Put event conditions in `predicate`; an outer `WHERE` filters the returned schema rows. The [schema-discovery guide](docs/schema-discovery.md) walks through field lists, tree output, exact matching counts, time windows, first/last appearance, direct access and string shapes, with a runnable example.
+The same `FROM` and `WHERE` work with either result format and with ordinary event queries. The [discovery guide](docs/schema-discovery.md) walks through three core features—schema discovery, string shapes and first/last-seen field history—with runnable examples and their results.
 
 You can project and filter individual document fields without creating another view. Apply the SQL type to the leaf you need:
 
@@ -214,24 +215,25 @@ CAN's `ts` is relative milliseconds. Restrict time-window queries to a `source_f
 
 ### Group log messages by string shape
 
-For a catalog containing a `message` field, `_shape.message` returns the stored string shape. For example, `Error: Exit code 1` and `Error: Exit code 128` both become `Error: Exit code %int%`:
+Use `clp_string_shape` to read a string field's stored shape. For example, `Error: Exit code 1` and `Error: Exit code 128` both become `Error: Exit code %int%`:
 
 ```python
 db.execute("CALL clp_create_catalog('logs')")
 db.execute("CALL clp_register('logs', '/path/to/log/archives')")
 db.execute("""
-    SELECT _shape.message::VARCHAR AS shape, count(*) AS occurrences
+    SELECT clp_string_shape(_events.message::VARCHAR) AS shape,
+           count(*) AS occurrences
     FROM logs.events
     GROUP BY shape
     ORDER BY occurrences DESC
 """).fetchall()
 ```
 
-`%int%`, `%float%` and `%str%` represent variables. `_shape_all.message` also derives shapes for text stored whole. Both projections work on the default `events` table and typed views, and their paths refer to the original document fields. Add `WHERE` conditions on `_events` fields or typed columns to analyze a subset of records.
+`%int%`, `%float%` and `%str%` represent variables. The function returns `VARCHAR`, with NULL for missing, null or non-string values. It works with catalog and direct access. In a typed view, use `clp_string_shape(text)` if the `text` column maps to the message field. Add `WHERE` conditions on `_events` fields or typed columns to analyze a subset of records.
 
-Shape grouping with `count(*)`, `SELECT DISTINCT`, and `COUNT(DISTINCT ...)` can use stored summaries instead of scanning events. With timestamp or numeric filters, CLP checks each archive independently: fully matching archives use their summaries, nonmatching archives are skipped, and partially matching or uncertain archives evaluate the filter on their records. This optimization is automatic for both `_shape` and `_shape_all` when the archive contains the required summaries.
+Shape grouping with `count(*)`, `SELECT DISTINCT`, and `COUNT(DISTINCT ...)` can use stored summaries instead of scanning events. With timestamp or numeric filters, CLP checks each archive independently: fully matching archives use their summaries, nonmatching archives are skipped, and partially matching or uncertain archives evaluate the filter on their records. This optimization applies automatically to `clp_string_shape` when the archive contains the required summaries.
 
-Shapes are available for CLP archives. `SELECT *` does not include them. Select a field such as `_shape.message`, rather than the entire `_shape` root.
+The argument must resolve to an original CLP archive field. Computed strings and values copied into another table are unsupported. Strings stored whole remain unchanged. `_shape.message::VARCHAR` provides the same result, while `_shape_all.message::VARCHAR` also derives shapes for text stored whole. Both forms retain the same aggregation optimizations.
 
 ## Evaluate your own dataset
 
@@ -307,7 +309,7 @@ with duckdb.connect(str(work / 'catalog.duckdb'), config={'allow_unsigned_extens
     db.execute("LOAD 'bin/x86_64/clp_s.duckdb_extension'")
     db.execute("CALL clp_create_catalog('custom')")
     db.execute("CALL clp_register('custom', ?)", [str(work / 'archives')])
-    fields = db.execute("SELECT DISTINCT unnest(fields, recursive := true) FROM clp_dataset_schemas('custom') ORDER BY ALL").fetchall()
+    fields = db.execute("SELECT clp_schema() FROM custom.events ORDER BY field_path").fetchall()
     print('Fields:', fields)
     db.execute("""
         CALL clp_create_mapped_view('custom', 'metrics', columns := [

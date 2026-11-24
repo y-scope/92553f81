@@ -1,67 +1,177 @@
-# Discover fields and schemas
+# Discover schemas, string shapes and field history
 
-CLP records are documents. Each document can have nested fields, and the fields and their types can vary between records. Schema discovery shows you that structure before you write a query.
+CLP records are documents. Each document can have nested fields, and the fields and their types can vary between records. Three discovery features help you understand the data before querying it:
 
-This walkthrough answers three questions: **Which fields exist? What is the structure of the events I care about? How do I query those fields?**
+| Feature | What it tells you | SQL |
+|---|---|---|
+| [Schema discovery](#discover-fields-and-document-structure) | Which fields and types exist, and how they are nested. | `clp_schema()`, `clp_schema_tree()` |
+| [String shapes](#find-repeated-string-shapes) | Which text patterns repeat within a field, and how often. | `clp_string_shape(field)` |
+| [Field history](#find-when-a-field-first-or-last-appears) | When a field first or last appears in the selected events. | `clp_first_seen`, `clp_last_seen` |
 
-The example catalog, `discovery_demo`, contains four request events: one successful payment request, two failed payment requests and one failed checkout request. Failed requests have a nested `error` object. If you want to run the examples, [prepare this catalog](#prepare-the-example) first. For your own data, substitute your catalog name.
+All three support event filters, so you can explore the full dataset or a subset. The walkthrough uses four request events in `discovery_demo`: one successful payment request, two failed payment requests and one failed checkout request. Failed requests have a nested `error` object. [Prepare the example catalog](#prepare-the-example) to follow along, or substitute your own catalog and fields.
 
-## 1. Find the available fields
+## Discover fields and document structure
+
+The two APIs discover the same merged schema in different result formats:
+
+| API | Result format | Useful for |
+|---|---|---|
+| `clp_schema()` | Rows with `field_path` and `source_types` columns. | Listing fields, choosing types for queries, or processing the schema as rows. |
+| `clp_schema_tree()` | A nested VARIANT with types at each node. | Exploring document structure or accessing a particular branch. |
+
+Both take **zero arguments**. `FROM` identifies the catalog event table or direct archive source, and `WHERE` selects the events to inspect.
+
+A catalog can cover many archive files with different event structures. **CLP automatically merges their schemas**, using only schemas that contribute matching events. Each field path appears once with its combined types, including fields found in only some files. Direct access through `clp_search` merges schemas in the same way.
+
+### Field rows: `clp_schema()`
 
 ```sql
-SELECT DISTINCT unnest(fields, recursive := true)
-FROM clp_dataset_schemas('discovery_demo')
-ORDER BY ALL;
+SELECT clp_schema()
+FROM discovery_demo.events
+ORDER BY field_path;
 ```
 
-The result lists each document path and its type:
+This directly returns one row per field, with two columns:
 
-| field_path | source_type |
+| field_path | source_types |
 |---|---|
-| error | object |
-| error.code | string |
-| error.retryable | boolean |
-| latency_ms | float |
-| message | string |
-| service | string |
-| status | integer |
-| ts | timestamp |
+| error | [object] |
+| error.code | [string] |
+| error.retryable | [boolean] |
+| latency_ms | [float] |
+| message | [string] |
+| service | [string] |
+| status | [integer] |
+| ts | [timestamp] |
 
-`error.code` means the `code` field inside the `error` object. A path can appear with several types if records store different kinds of values there. This list combines the fields across the catalog, so it does not imply that every record contains every field.
+`error.code` means the `code` field inside the `error` object. If that path contains integers in one archive and strings in another, discovery returns one `error.code` row with `source_types = [integer, string]`. The tree has both types at that same node. A field in the merged schema does not have to exist in every event or every file.
 
-## 2. Inspect the schema of matching events
+### Nested tree: `clp_schema_tree()`
 
-Suppose you want to investigate failed payment requests. Put that condition in `predicate` to discover the schema of just those events:
+Keep the same `FROM` and use `clp_schema_tree()` to get the same schema as a nested tree:
 
 ```sql
-SELECT schema_tree, matching_rows
-FROM clp_dataset_schemas('discovery_demo', predicate := $$
-    _events.service::VARCHAR = 'payments'
-    AND _events.status::BIGINT >= 500
-$$);
+SELECT clp_schema_tree() AS schema_tree
+FROM discovery_demo.events;
 ```
 
-Both failed payment requests have the same structure, so the result contains one schema with `matching_rows = 2`. Its `error` branch is shown here, formatted for readability:
+The result is a VARIANT. Here it is formatted as JSON for readability:
 
 ```json
 {
   "types": ["object"],
   "children": {
-    "code": {"types": ["string"], "children": {}},
-    "retryable": {"types": ["boolean"], "children": {}}
+    "error": {
+      "types": ["object"],
+      "children": {
+        "code": {"types": ["string"], "children": {}},
+        "retryable": {"types": ["boolean"], "children": {}}
+      }
+    },
+    "latency_ms": {"types": ["float"], "children": {}},
+    "message": {"types": ["string"], "children": {}},
+    "service": {"types": ["string"], "children": {}},
+    "status": {"types": ["integer"], "children": {}},
+    "ts": {"types": ["timestamp"], "children": {}}
   }
 }
 ```
 
-The tree shows that `error` contains a string `code` and a boolean `retryable`. Each node has a `types` list and a `children` object. `schema_tree` is a VARIANT, so you can select a branch with `schema_tree.children.error`.
+Each node has a `types` list and a `children` object. A leaf has no children. The `error` branch contains the same `code` and `retryable` fields shown as dotted paths in the field list. To return just that branch:
 
-Write the predicate as you would write a `WHERE` condition on the default `events` table. `_events` is the document, and `::VARCHAR` or `::BIGINT` specifies the type of the field being tested. The `$$...$$` quotes the condition while allowing single quotes around values such as `'payments'`.
+```sql
+SELECT (clp_schema_tree()).children.error AS error_schema
+FROM discovery_demo.events;
+```
 
-**Put event conditions in `predicate`.** An outer `WHERE` filters the returned schema rows. If matching events have different structures, discovery returns a row for each schema.
+### Filter events before discovering their schema
 
-## 3. Query the fields you found
+Both formats support the same event filters. For example, discover the fields in failed payment requests:
 
-The default table `discovery_demo.events` gives you access to the actual documents. Use the same condition and select the fields you need:
+```sql
+SELECT clp_schema()
+FROM discovery_demo.events
+WHERE _events.service::VARCHAR = 'payments'
+  AND _events.status::BIGINT >= 500;
+```
+
+This condition selects the two failed payment requests in the example. To return their schema as a tree, replace `clp_schema()` with `clp_schema_tree() AS schema_tree`. The selection stays the same.
+
+Filters access document values through `_events`. Changing the status condition to `_events.status::BIGINT = 200` selects the successful request. Its schema has no `error` branch: `clp_schema()` omits the error paths, and `clp_schema_tree()` omits the error node. CLP resolves filters from archive metadata when possible and reads event data when necessary.
+
+## Find repeated string shapes
+
+A schema describes document structure and types. A string shape describes the repeated text pattern inside one field. In the example, `Request 11 failed` and `Request 13 failed` share the shape `Request %int% failed`. Group by that shape to count occurrences:
+
+```sql
+SELECT clp_string_shape(_events.message::VARCHAR) AS shape,
+       count(*) AS occurrences
+FROM discovery_demo.events
+WHERE _events.service::VARCHAR = 'payments'
+  AND _events.status::BIGINT >= 500
+GROUP BY shape;
+```
+
+| shape | occurrences |
+|---|---:|
+| Request %int% failed | 2 |
+
+`%int%` represents the varying integer. Shapes can also contain `%float%` and `%str%` variables. `clp_string_shape` returns `VARCHAR`. Missing, null and non-string values return NULL. With a typed view, pass its string column directly, for example `clp_string_shape(text)` when `text` maps to `message`.
+
+CLP reads stored shapes and occurrence counts when they can answer the query, avoiding a scan of individual messages. Filters that select part of an archive may require scanning. The argument must refer to an original CLP archive field, through either catalog or direct access. Strings stored whole remain unchanged. See [string-shape queries](../README.md#group-log-messages-by-string-shape) for the `_shape` and `_shape_all` alternatives.
+
+## Find when a field first or last appears
+
+Use `clp_first_seen(field, order_value)` or `clp_last_seen(field, order_value)` on the default event table. They return the minimum or maximum ordering value among events containing the field. The ordering value can be a timestamp, relative clock or numeric counter:
+
+```sql
+SELECT clp_first_seen(_events.error.retryable, _events.ts) AS first_seen
+FROM discovery_demo.events;
+```
+
+This returns `2026-11-24 10:00:01.456`. Use `clp_last_seen` instead to get `2026-11-24 10:00:03.012`. Request both and restrict the events with a normal `WHERE` clause:
+
+```sql
+SELECT clp_first_seen(_events.error.retryable, _events.ts) AS first_seen,
+       clp_last_seen(_events.error.retryable, _events.ts) AS last_seen
+FROM discovery_demo.events
+WHERE _events.service::VARCHAR = 'payments';
+```
+
+| first_seen | last_seen |
+|---|---|
+| 2026-11-24 10:00:01.456 | 2026-11-24 10:00:03.012 |
+
+CLP computes only the bounds your query uses. Requesting both shares the work. It uses archive summaries when they can answer the filtered query exactly, and reads event data when necessary. The result is exact in either case.
+
+Pass the field path without a cast so CLP can test its presence. The second argument chooses the ordering value:
+
+| Second argument | Result |
+|---|---|
+| `_events.ts` | Uses the timestamp declared during compression and returns `TIMESTAMP_NS`. |
+| `_events.elapsed::BIGINT` | Returns `BIGINT` in the original unit. Seconds remain seconds, milliseconds remain milliseconds, and counters remain counters. |
+| `_events.elapsed::DOUBLE` | Returns `DOUBLE`, preserving fractional numeric values. |
+
+For the public CAN catalog created by the [benchmark runner](../README.md#run), find when a signal appears within one recording using its relative millisecond clock directly:
+
+```sql
+SELECT clp_first_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS first_ms,
+       clp_last_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS last_ms
+FROM can.events
+WHERE _events.source_file::VARCHAR = 'rav4_c01_s0001';
+```
+
+| first_ms | last_ms |
+|---:|---:|
+| 9734164 | 9794150 |
+
+Numeric inputs retain their SQL type and do not require timestamp conversion or a particular unit. Scope relative clocks to their recording or device when they can reset. Direct access uses the same expressions with `FROM clp_search('<archive path>')`.
+
+A field present with a null value still counts. A missing field does not. Bounds are NULL when no matching event has both the field and a usable ordering value. These bounds describe the available records, not necessarily when an application first introduced a field. To discover the history of many fields together, use the [field inventory](#discover-history-across-many-fields).
+
+## Query the fields you found
+
+The default table `discovery_demo.events` gives you access to the actual documents. For failed payment requests, select the error code and latency:
 
 ```sql
 SELECT _events.error.code::VARCHAR AS error_code,
@@ -124,36 +234,54 @@ This returns `[(4,)]`. Keep the connection open while following the walkthrough.
 import json
 
 error_schema = db.execute("""
-    SELECT schema_tree.children.error
-    FROM clp_dataset_schemas('discovery_demo', predicate := $$
-        _events.service::VARCHAR = 'payments'
-        AND _events.status::BIGINT >= 500
-    $$)
+    SELECT (clp_schema_tree()).children.error
+    FROM discovery_demo.events
+    WHERE _events.service::VARCHAR = 'payments'
+      AND _events.status::BIGINT >= 500
 """).fetchone()[0]
 print(json.dumps(error_schema, indent=2))
 ```
 
-### Find when a field first or last appears
+### Add time and field filters
 
-Use `clp_first_seen(field, timestamp)` or `clp_last_seen(field, timestamp)` on the default event table:
-
-```sql
-SELECT clp_first_seen(_events.error.retryable, _events.ts) AS first_seen
-FROM discovery_demo.events;
-```
-
-This returns `2026-11-24 10:00:01.456`. Use `clp_last_seen` instead to get `2026-11-24 10:00:03.012`. Request both and restrict the events with a normal `WHERE` clause:
+Use ordinary SQL conditions to choose the events whose schema you want to inspect:
 
 ```sql
-SELECT clp_first_seen(_events.error.retryable, _events.ts) AS first_seen,
-       clp_last_seen(_events.error.retryable, _events.ts) AS last_seen
+SELECT clp_schema_tree() AS schema_tree
 FROM discovery_demo.events
-WHERE _events.service::VARCHAR = 'payments';
+WHERE TRY_CAST(_events.ts AS TIMESTAMP_NS) >= TIMESTAMP_NS '2026-11-24 10:00:00'
+  AND TRY_CAST(_events.ts AS TIMESTAMP_NS) < TIMESTAMP_NS '2026-11-24 10:00:02'
+  AND _events.service::VARCHAR = 'payments'
+  AND _events.error.code::VARCHAR IS NOT NULL
+  AND _events.error.retryable::BOOLEAN IS NOT NULL;
 ```
 
-CLP computes only the bounds your query uses. Requesting both shares the work. It uses archive summaries when they can answer the filtered query exactly, and reads event data when necessary. The result is exact in either case.
+This selects the payment error at `10:00:01.456` and returns its complete schema. Replace `clp_schema_tree()` with `clp_schema()` to return field rows instead. The example includes the start and excludes the end of the window. Omit either condition for an open-ended window.
 
-Pass the field path without a cast so CLP can test its presence. The second argument chooses the event clock: `_events.ts` uses the timestamp declared during compression and returns `TIMESTAMP_NS`. For an ordinary numeric clock, convert its known unit explicitly, for example `epoch_ms(_events.ts::BIGINT)`. Direct access uses the same expressions with `FROM clp_search('<archive path>')`.
+The sample's `ts` value is ISO timestamp text. `TRY_CAST` explicitly converts that text to a timestamp. For a typed view with a `TIMESTAMP_NS` column, compare the column directly, such as `event_time >= TIMESTAMP_NS '2026-11-24 10:00:00'`. This uses the declared timestamp's instant across archive precisions. For an ordinary numeric clock, compare its typed integer value in the original unit. Do not cast numeric milliseconds directly to `TIMESTAMP_NS`.
+
+The field conditions above require non-null values of the specified types. To limit the **displayed schema paths**, put that filter outside the discovery query:
+
+```sql
+SELECT field_path, source_types
+FROM (
+    SELECT clp_schema()
+    FROM discovery_demo.events
+    WHERE _events.service::VARCHAR = 'payments'
+      AND _events.status::BIGINT >= 500
+) AS fields
+WHERE field_path LIKE 'error.%'
+ORDER BY field_path;
+```
+
+| field_path | source_types |
+|---|---|
+| error.code | [string] |
+| error.retryable | [boolean] |
+
+The inner `WHERE` chooses events. The outer `WHERE` chooses fields from their merged schema.
+
+### Discover history across many fields
 
 To discover the history of every field at once, use the field inventory:
 
@@ -162,103 +290,56 @@ SELECT field_path, first_seen, last_seen
 FROM clp_dataset_fields('discovery_demo', time_path := 'ts');
 ```
 
-This also returns `source_types`, `matching_rows` and `archive_count`. It accepts field patterns, time windows and `predicate` as described below. Select only `first_seen` or `last_seen` when that is all you need. For direct access, use `clp_archive_fields` with an archive path or list of paths.
+The function also exposes `source_types`, `matching_rows` and `archive_count`. Select only `first_seen` or `last_seen` when that is all you need. For direct access, use `clp_archive_fields` with an archive path or list of paths.
 
-First and last seen refer to event time in the available data. A field present with a null value still counts. A missing field does not. Bounds are NULL when no matching event has both the field and a usable timestamp. In the field inventory, a numeric window (`start_value` or `end_value`) instead returns `BIGINT` bounds in the clock's original unit.
+These parameters apply to the bulk field-history functions:
 
-### Add time and field filters
-
-You can combine event conditions with required fields and a time window:
-
-```sql
-SELECT schema_tree, matching_rows
-FROM clp_dataset_schemas('discovery_demo',
-    fields := ['error.code', 'error.retryable'],
-    match_all := true,
-    time_path := 'ts',
-    start_time := TIMESTAMP '2026-11-24 10:00:00',
-    end_time := TIMESTAMP '2026-11-24 10:00:02',
-    predicate := $$ _events.service::VARCHAR = 'payments' $$);
-```
-
-This selects the payment error at `10:00:01.456`, returning one schema with `matching_rows = 1`. Time windows include the start and exclude the end. Either bound can be omitted.
-
-### Filter parameters
-
-| Parameter | What it selects |
+| Parameter | Meaning |
 |---|---|
-| `fields := ['error.code']` | Schemas containing an exact document path, including a field whose value is null. |
-| `field_patterns := ['error.%']` | Paths matching case-sensitive SQL LIKE patterns. `%` matches any sequence and `_` one character. |
-| `match_all := true` | Require every field selector to match in the same schema. The default accepts any selector. |
-| `predicate := $$ ... $$` | Events for which a scalar SQL condition evaluates to TRUE. |
-| `time_path`, `start_time`, `end_time` | A time window for a field declared as a timestamp during compression. Supply typed timestamp literals. |
-| `time_path`, `start_value`, `end_value` | A window for an ordinary signed integer field, using its original unit. |
-
-Use timestamp bounds for fields declared as timestamps during compression. For relative device clocks and ordinary signed integers, use `start_value` and `end_value` in the field's original unit.
-
-### Schemas and counts
-
-To see which fields occur together, keep the schema rows separate:
-
-```sql
-SELECT schema_id, fields, matching_rows
-FROM clp_dataset_schemas('discovery_demo')
-ORDER BY matching_rows DESC;
-```
-
-The example has three schemas: two errors with `retryable`, one error without it and one successful event. Their counts are 2, 1 and 1. `schema_id` identifies a set of document paths and types.
-
-| Result | Meaning |
-|---|---|
-| `matching_rows` | Exact count of events passing all selections for this schema. |
-| `total_rows` | Records before event filtering for the schema groups that produced matches. This can exceed `matching_rows`. |
-| `archive_count` | Number of archives contributing matches. |
-
-Field filters return the complete schema, including fields beyond those requested. Expanding `fields` repeats the counts once per field. Sum `matching_rows` before expanding if you need an event total.
+| `fields := ['error.code']` | Return this exact path, including occurrences whose value is null. |
+| `field_patterns := ['error.%']` | Return paths matching case-sensitive SQL LIKE patterns. `%` matches any sequence and `_` one character. |
+| `match_all := true` | Require all selected paths to occur together. The default accepts any selector. |
+| `predicate := $$ _events.status::BIGINT >= 500 $$` | Include only events satisfying this condition. Use original document paths. |
+| `time_path := 'ts'` | Choose the field used for first/last seen. |
+| `start_time`, `end_time` | Bound a declared timestamp using typed timestamp literals, inclusive start and exclusive end. |
+| `start_value`, `end_value` | Bound an ordinary signed integer clock in its original unit. First/last seen then return `BIGINT` values in that unit. |
 
 ### Paths, types and predicates
 
 A literal dot in a field name is escaped in discovery paths: `error\.code` means a single top-level key named `error.code`. Unescaped `error.code` follows the nested object. Arrays are reported as `array`, without expanding their individual elements.
 
-Supported typed leaf accesses select values of the requested type and range. For example, `::BIGINT` returns NULL for strings, missing fields and incompatible values. `TRY_CAST(... AS BIGINT)` opts into conversion when needed. Inside `predicate`, use original document paths even if a typed view gives those paths different column names.
+Supported typed leaf accesses select values of the requested type and range. For example, `::BIGINT` returns NULL for strings, missing fields and incompatible values. `TRY_CAST(... AS BIGINT)` opts into conversion when needed.
 
-`predicate` supports comparisons, `IN`, `AND`/`OR`/`NOT`, arithmetic, null checks and scalar functions such as `regexp_matches`. It can inspect objects and arrays too, for example `_events.error IS NOT NULL`. Aggregates, window functions, subqueries and unbound parameters are not supported in this per-event condition.
+`WHERE` supports comparisons, `IN`, `AND`/`OR`/`NOT`, arithmetic, null checks and scalar functions such as `regexp_matches`. It can inspect objects and arrays too, for example `_events.error IS NOT NULL`. Bound parameters work with the schema APIs. The bulk field-history `predicate` parameter accepts a scalar expression without subqueries or parameters.
 
 Types describe the stored schema groups, so they can be broader than the values selected by a predicate. For a field containing both signed and unsigned integers, both types can still be listed after filtering selects only one.
 
 ### Direct archive access
 
-Use a catalog for repeated work. For a one-off inspection, pass explicit archive paths to `clp_archive_schemas`. The sample command creates generated archive filenames, which Python can collect:
-
-```python
-from pathlib import Path
-
-archives = sorted(str(path.resolve()) for path in Path('.work/discovery/archives').iterdir())
-db.execute("""
-    SELECT schema_tree, matching_rows
-    FROM clp_archive_schemas(?, predicate := $$
-        _events.service::VARCHAR = 'payments'
-        AND _events.status::BIGINT >= 500
-    $$)
-""", [archives]).fetchall()
-```
-
-This returns the same schema and count as the catalog query. A single archive path also works. Direct schema discovery accepts explicit paths or a list of paths, rather than a directory or glob. Use `clp_register` when you want directory discovery and a persistent catalog.
-
-### String shapes
-
-A schema describes document structure and types. A string shape describes the repeated text pattern inside one field. For the sample catalog, the two error messages with different request numbers share a shape:
+Use a catalog for repeated work. For a one-off inspection, both schema APIs work with `clp_search`:
 
 ```sql
-SELECT _shape.message::VARCHAR AS shape, count(*) AS occurrences
-FROM discovery_demo.events
+SELECT clp_schema_tree() AS schema_tree
+FROM clp_search('.work/discovery/archives')
 WHERE _events.service::VARCHAR = 'payments'
-  AND _events.status::BIGINT >= 500
-GROUP BY shape;
+  AND _events.status::BIGINT >= 500;
 ```
 
-This returns `Request %int% failed` with a count of 2. `_shape_all.message` also derives shapes for strings stored whole. Use schema discovery to choose fields, then shape analysis to explore patterns within those fields. See [string-shape queries](../README.md#group-log-messages-by-string-shape) for more examples.
+This returns the same merged schema as the catalog query. `clp_search` accepts an archive, directory or list of inputs.
 
-### Supported inputs
+### Schema-discovery input and query restrictions
 
-Schema discovery accepts whole CLP archives. These functions do not support catalogs containing only KV-IR inputs or individual archive-member entries.
+Schema discovery requires whole CLP archives. KV-IR inputs and individual archive-member entries are unsupported, including when mixed with whole archives in a catalog.
+
+Use the zero-argument APIs in an ungrouped schema query over one event table or direct archive source. Put `clp_schema()` directly in the SELECT list to expose its two columns. They describe stored event fields, including fields omitted by a view's projection. Ordinary scalar filters, bound parameters and `FILTER (WHERE ...)` are supported. Joins, grouping, windows, row limits on the input events, volatile conditions and combining them with non-schema aggregates are not supported.
+
+| API | Output | Result when no events match |
+|---|---|---|
+| `clp_schema()` | `field_path VARCHAR`, `source_types VARCHAR[]` | Zero rows. |
+| `clp_schema_tree()` | One `VARIANT` column. | One row containing `{"types":["object"],"children":{}}`. |
+
+Filter or aggregate discovered field rows in an [outer query](#add-time-and-field-filters). Selecting both result formats with the same event filter shares discovery work and repeats the tree alongside each field row.
+
+### Verified on the public datasets
+
+These operations were checked against all 1.64 million Westermo records and 27.40 million CAN frames, through both catalog and direct access. See [the validation results](discovery-validation.md) for concrete field histories, query timings and a script to repeat the checks.

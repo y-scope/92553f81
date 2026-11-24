@@ -1,0 +1,6804 @@
+{
+  "created_at": "2026-11-24T19:39:06.946685+00:00",
+  "duckdb": "1.5.6",
+  "extension_sha256": "ccf87fa4a10b9e01911c8100d232365db7f81c6b46f697f8e609f24c1cceb9a1",
+  "warmups": 2,
+  "repeats": 7,
+  "threads": 4,
+  "datasets": [
+    {
+      "name": "westermo",
+      "records": 1640857,
+      "files": 19,
+      "archives": 1,
+      "fields": 25,
+      "source": "system-1",
+      "clock": "timestamp",
+      "clock_unit": "s",
+      "signal": "load_1m",
+      "history": [
+        0,
+        2592000,
+        85749
+      ],
+      "queries": [
+        {
+          "id": "schema_all",
+          "operation": "Schema fields: all",
+          "sql": "SELECT clp_schema() FROM westermo.events  ORDER BY field_path",
+          "result": [
+            [
+              "cpu_iowait",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_system",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_user",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_written",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_time",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_write",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_15m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_1m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_5m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "server_up",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_context_switch_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_fork_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_interrupt_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_mem_available",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_buffered",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_cache",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_thermal",
+              [
+                "float"
+              ]
+            ],
+            [
+              "system_id",
+              [
+                "string"
+              ]
+            ],
+            [
+              "timestamp",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.28823,
+            1.214617,
+            1.158814,
+            1.162375,
+            1.126756,
+            1.14694,
+            1.199182
+          ],
+          "p50_ms": 1.162375,
+          "average_ms": 1.1852734285714286
+        },
+        {
+          "id": "tree_all",
+          "operation": "Schema tree: all",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM westermo.events ",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "cpu_iowait": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_system": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_user": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_written": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_time": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_write": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_15m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_1m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_5m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "server_up": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_context_switch_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_fork_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_interrupt_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_available": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_buffered": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_cache": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_thermal": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "system_id": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "timestamp": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.180185,
+            1.086387,
+            1.294166,
+            1.117258,
+            1.146941,
+            1.097074,
+            1.27042
+          ],
+          "p50_ms": 1.146941,
+          "average_ms": 1.1703472857142858
+        },
+        {
+          "id": "schema_value",
+          "operation": "Schema fields: value",
+          "sql": "SELECT clp_schema() FROM westermo.events WHERE _events.load_1m::DOUBLE >= 2 ORDER BY field_path",
+          "result": [
+            [
+              "cpu_iowait",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_system",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_user",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_written",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_time",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_write",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_15m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_1m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_5m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "server_up",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_context_switch_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_fork_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_interrupt_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_mem_available",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_buffered",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_cache",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_thermal",
+              [
+                "float"
+              ]
+            ],
+            [
+              "system_id",
+              [
+                "string"
+              ]
+            ],
+            [
+              "timestamp",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            11.345923,
+            11.323364,
+            11.518083,
+            11.522832,
+            11.747233,
+            11.913457,
+            11.873088
+          ],
+          "p50_ms": 11.522832,
+          "average_ms": 11.606282857142856
+        },
+        {
+          "id": "tree_value",
+          "operation": "Schema tree: value",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM westermo.events WHERE _events.load_1m::DOUBLE >= 2",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "cpu_iowait": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_system": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_user": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_written": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_time": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_write": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_15m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_1m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_5m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "server_up": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_context_switch_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_fork_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_interrupt_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_available": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_buffered": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_cache": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_thermal": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "system_id": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "timestamp": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            11.226004,
+            11.413599,
+            11.437346,
+            11.273497,
+            11.261624,
+            11.24144,
+            11.268748
+          ],
+          "p50_ms": 11.268748,
+          "average_ms": 11.303179714285715
+        },
+        {
+          "id": "schema_window",
+          "operation": "Schema fields: window",
+          "sql": "SELECT clp_schema() FROM westermo.events WHERE _events.system_id::VARCHAR='system-1' AND _events.load_1m::DOUBLE IS NOT NULL AND _events.timestamp::BIGINT >= 0 AND _events.timestamp::BIGINT < 3600 ORDER BY field_path",
+          "result": [
+            [
+              "cpu_iowait",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_system",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_user",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_written",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_time",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_write",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_15m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_1m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_5m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "server_up",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_context_switch_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_fork_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_interrupt_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_mem_available",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_buffered",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_cache",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_thermal",
+              [
+                "float"
+              ]
+            ],
+            [
+              "system_id",
+              [
+                "string"
+              ]
+            ],
+            [
+              "timestamp",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            118.377064,
+            118.733256,
+            118.187095,
+            117.916388,
+            118.501731,
+            116.447687,
+            115.693746
+          ],
+          "p50_ms": 118.187095,
+          "average_ms": 117.69385242857143
+        },
+        {
+          "id": "tree_window",
+          "operation": "Schema tree: window",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM westermo.events WHERE _events.system_id::VARCHAR='system-1' AND _events.load_1m::DOUBLE IS NOT NULL AND _events.timestamp::BIGINT >= 0 AND _events.timestamp::BIGINT < 3600",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "cpu_iowait": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_system": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_user": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_written": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_time": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_write": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_15m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_1m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_5m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "server_up": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_context_switch_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_fork_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_interrupt_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_available": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_buffered": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_cache": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_thermal": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "system_id": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "timestamp": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            116.205476,
+            116.23872,
+            115.832661,
+            116.92261,
+            118.657269,
+            115.482404,
+            115.272251
+          ],
+          "p50_ms": 116.205476,
+          "average_ms": 116.37305585714286
+        },
+        {
+          "id": "schema_derived",
+          "operation": "Schema fields: derived",
+          "sql": "SELECT clp_schema() FROM westermo.events WHERE _events.load_1m::DOUBLE > _events.load_15m::DOUBLE ORDER BY field_path",
+          "result": [
+            [
+              "cpu_iowait",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_system",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_user",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_bytes_written",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_read",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_time",
+              [
+                "float"
+              ]
+            ],
+            [
+              "disk_io_write",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_15m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_1m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "load_5m",
+              [
+                "float"
+              ]
+            ],
+            [
+              "server_up",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_context_switch_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_fork_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_interrupt_rate",
+              [
+                "float"
+              ]
+            ],
+            [
+              "sys_mem_available",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_buffered",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_cache",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_free",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_swap_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_mem_total",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "sys_thermal",
+              [
+                "float"
+              ]
+            ],
+            [
+              "system_id",
+              [
+                "string"
+              ]
+            ],
+            [
+              "timestamp",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            23.835224,
+            23.769923,
+            22.630106,
+            23.693935,
+            23.454098,
+            23.442225,
+            23.41373
+          ],
+          "p50_ms": 23.454098,
+          "average_ms": 23.462748714285713
+        },
+        {
+          "id": "tree_derived",
+          "operation": "Schema tree: derived",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM westermo.events WHERE _events.load_1m::DOUBLE > _events.load_15m::DOUBLE",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "cpu_iowait": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_system": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "cpu_user": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_bytes_written": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_read": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_time": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "disk_io_write": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_15m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_1m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "load_5m": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "server_up": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_context_switch_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_fork_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_interrupt_rate": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_available": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_buffered": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_cache": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_free": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_swap_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_mem_total": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "sys_thermal": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "system_id": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "timestamp": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            24.060813,
+            24.224662,
+            23.591826,
+            23.456473,
+            23.946832,
+            23.557394,
+            23.750925
+          ],
+          "p50_ms": 23.750925,
+          "average_ms": 23.798417857142855
+        },
+        {
+          "id": "schema_paths",
+          "operation": "Filter the returned field paths",
+          "sql": "SELECT * FROM (SELECT clp_schema() FROM westermo.events) f WHERE starts_with(field_path,'cpu_') ORDER BY field_path",
+          "result": [
+            [
+              "cpu_iowait",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_system",
+              [
+                "float"
+              ]
+            ],
+            [
+              "cpu_user",
+              [
+                "float"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.404587,
+            1.227677,
+            1.290605,
+            1.240738,
+            1.352345,
+            1.238364,
+            1.197994
+          ],
+          "p50_ms": 1.240738,
+          "average_ms": 1.2789014285714286
+        },
+        {
+          "id": "schema_empty",
+          "operation": "Schema of an empty selection",
+          "sql": "SELECT clp_schema() FROM westermo.events WHERE _events.load_1m::DOUBLE > 1e100",
+          "result": [],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.114883,
+            1.06739,
+            1.013961,
+            0.985466,
+            1.075702,
+            1.101822,
+            0.967657
+          ],
+          "p50_ms": 1.06739,
+          "average_ms": 1.0466972857142858
+        },
+        {
+          "id": "history_first",
+          "operation": "Field history in original units: first",
+          "sql": "SELECT clp_first_seen(_events.load_1m, _events.timestamp::BIGINT) AS first_seen FROM westermo.events WHERE _events.system_id::VARCHAR='system-1'",
+          "result": [
+            [
+              0
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            116.444125,
+            115.641504,
+            115.14046,
+            116.038065,
+            116.20785,
+            113.258575,
+            116.108116
+          ],
+          "p50_ms": 116.038065,
+          "average_ms": 115.548385
+        },
+        {
+          "id": "history_last",
+          "operation": "Field history in original units: last",
+          "sql": "SELECT clp_last_seen(_events.load_1m, _events.timestamp::BIGINT) AS last_seen FROM westermo.events WHERE _events.system_id::VARCHAR='system-1'",
+          "result": [
+            [
+              2592000
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            115.832661,
+            116.769447,
+            116.778946,
+            116.522487,
+            115.255629,
+            116.650717,
+            116.026192
+          ],
+          "p50_ms": 116.522487,
+          "average_ms": 116.262297
+        },
+        {
+          "id": "history_both",
+          "operation": "Field history in original units: both",
+          "sql": "SELECT clp_first_seen(_events.load_1m, _events.timestamp::BIGINT) AS first_seen, clp_last_seen(_events.load_1m, _events.timestamp::BIGINT) AS last_seen FROM westermo.events WHERE _events.system_id::VARCHAR='system-1'",
+          "result": [
+            [
+              0,
+              2592000
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            117.23606,
+            116.311146,
+            116.415629,
+            116.186479,
+            116.830001,
+            116.14611,
+            116.002446
+          ],
+          "p50_ms": 116.311146,
+          "average_ms": 116.44683871428572
+        },
+        {
+          "id": "history_inventory",
+          "operation": "First/last seen for all fields",
+          "sql": "SELECT field_path,first_seen,last_seen,matching_rows FROM clp_dataset_fields('westermo', time_path='timestamp', start_value=0, predicate='_events.system_id::VARCHAR=''system-1''') ORDER BY field_path",
+          "result": [
+            [
+              "cpu_iowait",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "cpu_system",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "cpu_user",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "disk_bytes_read",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "disk_bytes_written",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "disk_io_read",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "disk_io_time",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "disk_io_write",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "load_15m",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "load_1m",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "load_5m",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "server_up",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_context_switch_rate",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_fork_rate",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_interrupt_rate",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_available",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_buffered",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_cache",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_free",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_swap_free",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_swap_total",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_mem_total",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "sys_thermal",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "system_id",
+              0,
+              2592000,
+              85749
+            ],
+            [
+              "timestamp",
+              0,
+              2592000,
+              85749
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            117.491331,
+            119.713973,
+            119.420708,
+            116.070123,
+            121.523432,
+            119.588119,
+            117.744228
+          ],
+          "p50_ms": 119.420708,
+          "average_ms": 118.79313057142858
+        },
+        {
+          "id": "history_filtered",
+          "operation": "Field history with a value predicate",
+          "sql": "SELECT clp_first_seen(_events.load_1m, _events.timestamp::BIGINT) AS first_seen, clp_last_seen(_events.load_1m, _events.timestamp::BIGINT) AS last_seen FROM westermo.events WHERE _events.system_id::VARCHAR='system-1' AND _events.load_1m::DOUBLE >= 2",
+          "result": [
+            [
+              23610,
+              2579640
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            131.659488,
+            131.321104,
+            132.185465,
+            131.294984,
+            131.306857,
+            130.843806,
+            132.488229
+          ],
+          "p50_ms": 131.321104,
+          "average_ms": 131.58570471428573
+        },
+        {
+          "id": "history_aggregate_explicit",
+          "operation": "First/last aggregate with explicit clock conversion",
+          "sql": "SELECT epoch_ms(clp_first_seen(_events.load_1m, epoch_ms(_events.timestamp::BIGINT * 1000))) // 1000 AS first_seen,epoch_ms(clp_last_seen(_events.load_1m, epoch_ms(_events.timestamp::BIGINT * 1000))) // 1000 AS last_seen FROM westermo.events WHERE _events.system_id::VARCHAR='system-1'",
+          "result": [
+            [
+              0,
+              2592000
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            378.841748,
+            385.214034,
+            380.753315,
+            403.071159,
+            382.067666,
+            380.482608,
+            379.696611
+          ],
+          "p50_ms": 380.753315,
+          "average_ms": 384.3038772857143
+        },
+        {
+          "id": "history_raw_clock",
+          "operation": "Raw relative clock is not a declared timestamp",
+          "sql": "SELECT clp_first_seen(_events.load_1m,_events.timestamp),clp_last_seen(_events.load_1m,_events.timestamp) FROM westermo.events WHERE _events.system_id::VARCHAR='system-1'",
+          "result": [
+            [
+              null,
+              null
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            156.382819,
+            158.860733,
+            165.119037,
+            160.863723,
+            167.051975,
+            159.626547,
+            161.360017
+          ],
+          "p50_ms": 160.863723,
+          "average_ms": 161.32355014285713
+        },
+        {
+          "id": "shapes_all",
+          "operation": "String-shape counts: all",
+          "sql": "SELECT clp_string_shape(_events.system_id::VARCHAR) AS shape,count(*) AS n FROM westermo.events  GROUP BY shape ORDER BY n DESC,shape",
+          "result": [
+            [
+              "system-10",
+              86401
+            ],
+            [
+              "system-12",
+              86401
+            ],
+            [
+              "system-15",
+              86401
+            ],
+            [
+              "system-16",
+              86401
+            ],
+            [
+              "system-17",
+              86401
+            ],
+            [
+              "system-3",
+              86401
+            ],
+            [
+              "system-5",
+              86401
+            ],
+            [
+              "system-6",
+              86401
+            ],
+            [
+              "system-7",
+              86401
+            ],
+            [
+              "system-9",
+              86401
+            ],
+            [
+              "system-4",
+              86397
+            ],
+            [
+              "system-8",
+              86397
+            ],
+            [
+              "system-13",
+              86395
+            ],
+            [
+              "system-2",
+              86393
+            ],
+            [
+              "system-14",
+              86383
+            ],
+            [
+              "system-19",
+              86383
+            ],
+            [
+              "system-11",
+              86379
+            ],
+            [
+              "system-18",
+              86371
+            ],
+            [
+              "system-1",
+              85749
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.023461,
+            1.11607,
+            1.311976,
+            0.929663,
+            1.144566,
+            1.18256,
+            1.095886
+          ],
+          "p50_ms": 1.11607,
+          "average_ms": 1.1148831428571429
+        },
+        {
+          "id": "shapes_value",
+          "operation": "String-shape counts: value",
+          "sql": "SELECT clp_string_shape(_events.system_id::VARCHAR) AS shape,count(*) AS n FROM westermo.events WHERE _events.load_1m::DOUBLE >= 2 GROUP BY shape ORDER BY n DESC,shape",
+          "result": [
+            [
+              "system-7",
+              494
+            ],
+            [
+              "system-9",
+              440
+            ],
+            [
+              "system-6",
+              388
+            ],
+            [
+              "system-8",
+              243
+            ],
+            [
+              "system-14",
+              205
+            ],
+            [
+              "system-18",
+              137
+            ],
+            [
+              "system-15",
+              134
+            ],
+            [
+              "system-16",
+              134
+            ],
+            [
+              "system-19",
+              121
+            ],
+            [
+              "system-10",
+              108
+            ],
+            [
+              "system-5",
+              93
+            ],
+            [
+              "system-1",
+              69
+            ],
+            [
+              "system-3",
+              51
+            ],
+            [
+              "system-11",
+              22
+            ],
+            [
+              "system-12",
+              11
+            ],
+            [
+              "system-17",
+              8
+            ],
+            [
+              "system-13",
+              2
+            ],
+            [
+              "system-2",
+              2
+            ],
+            [
+              "system-4",
+              1
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            13.472393,
+            13.335853,
+            13.036651,
+            13.011717,
+            13.060397,
+            13.066333,
+            12.76357
+          ],
+          "p50_ms": 13.060397,
+          "average_ms": 13.106702
+        }
+      ],
+      "typed_view_and_parameters_validated": true
+    },
+    {
+      "name": "can",
+      "records": 27400285,
+      "files": 54,
+      "archives": 4,
+      "fields": 90,
+      "source": "rav4_c01_s0001",
+      "clock": "ts",
+      "clock_unit": "ms",
+      "signal": "WHEEL_SPEED_FR",
+      "history": [
+        9734164,
+        9794150,
+        4973
+      ],
+      "queries": [
+        {
+          "id": "schema_all",
+          "operation": "Schema fields: all",
+          "sql": "SELECT clp_schema() FROM can.events  ORDER BY field_path",
+          "result": [
+            [
+              "ACCEL_NET",
+              [
+                "float"
+              ]
+            ],
+            [
+              "ACCEL_Y",
+              [
+                "float"
+              ]
+            ],
+            [
+              "AUTO_HIGH_BEAM",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "BRAKE_LIGHTS_ACC",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "BRAKE_PRESSED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "BRAKE_PRESSURE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "CANCEL_REQ",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "CHECKSUM",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "COUNTER",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "CRUISE_ACTIVE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "CRUISE_CONTROL_STATE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "CRUISE_STATE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "DAY",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "DISTANCE_LINES",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "DOOR_OPEN_FL",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "DOOR_OPEN_FR",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "DOOR_OPEN_RL",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "DOOR_OPEN_RR",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "ENCODER",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "FRONT_FOG",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "GAS_PEDAL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "GAS_RELEASED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "GEAR",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "GMTDIFF_HOURS",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "GMTDIFF_MINUTES",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "GMT_DIFF",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "HAZARD_LIGHT",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "HIGH_BEAM",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "HOUR",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "IPAS_STATE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "LAT_DIST",
+              [
+                "float"
+              ]
+            ],
+            [
+              "LKA_STATE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "LONG_DIST",
+              [
+                "float"
+              ]
+            ],
+            [
+              "LOW_BEAM",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "LOW_SPEED_LOCKOUT",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "MAIN_ON",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "MINUTE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "MONTH",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "NEW_TRACK",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "ODOMETER",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "PARKING_LIGHT",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "REL_ACCEL",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "REL_SPEED",
+              [
+                "float"
+              ]
+            ],
+            [
+              "RPM",
+              [
+                "float"
+              ]
+            ],
+            [
+              "SCORE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "SEATBELT_DRIVER_UNLATCHED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "SET_SPEED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "SPEED",
+              [
+                "float"
+              ]
+            ],
+            [
+              "STANDSTILL_ON",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "STEERING_TORQUE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "STEER_ANGLE",
+              [
+                "float"
+              ]
+            ],
+            [
+              "STEER_FRACTION",
+              [
+                "float"
+              ]
+            ],
+            [
+              "STEER_OVERRIDE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "STEER_RATE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "STEER_TORQUE_DRIVER",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "STEER_TORQUE_EPS",
+              [
+                "float"
+              ]
+            ],
+            [
+              "SUMMER",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "TC_DISABLED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "TURN_SIGNALS",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "TYPE",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "UI_SET_SPEED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "UNITS",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VALID",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_1",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_10",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_11",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_12",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_13",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_14",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_15",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_16",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_17",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_2",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_3",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_4",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_5",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_6",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_7",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_8",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VIN_9",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "VSC_DISABLED",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_FL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_FR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "YAW_RATE",
+              [
+                "float"
+              ]
+            ],
+            [
+              "YEAR",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "channel_id",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "source_file",
+              [
+                "string"
+              ]
+            ],
+            [
+              "ts",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            2.035047,
+            2.004177,
+            1.680042,
+            1.763154,
+            1.729909,
+            1.7121,
+            1.84389
+          ],
+          "p50_ms": 1.763154,
+          "average_ms": 1.8240455714285715
+        },
+        {
+          "id": "tree_all",
+          "operation": "Schema tree: all",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM can.events ",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "ACCEL_NET": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "ACCEL_Y": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "AUTO_HIGH_BEAM": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "BRAKE_LIGHTS_ACC": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "BRAKE_PRESSED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "BRAKE_PRESSURE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "CANCEL_REQ": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "CHECKSUM": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "COUNTER": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "CRUISE_ACTIVE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "CRUISE_CONTROL_STATE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "CRUISE_STATE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "DAY": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "DISTANCE_LINES": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "DOOR_OPEN_FL": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "DOOR_OPEN_FR": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "DOOR_OPEN_RL": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "DOOR_OPEN_RR": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "ENCODER": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "FRONT_FOG": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "GAS_PEDAL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "GAS_RELEASED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "GEAR": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "GMTDIFF_HOURS": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "GMTDIFF_MINUTES": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "GMT_DIFF": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "HAZARD_LIGHT": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "HIGH_BEAM": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "HOUR": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "IPAS_STATE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "LAT_DIST": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "LKA_STATE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "LONG_DIST": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "LOW_BEAM": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "LOW_SPEED_LOCKOUT": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "MAIN_ON": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "MINUTE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "MONTH": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "NEW_TRACK": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "ODOMETER": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "PARKING_LIGHT": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "REL_ACCEL": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "REL_SPEED": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "RPM": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "SCORE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "SEATBELT_DRIVER_UNLATCHED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "SET_SPEED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "SPEED": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "STANDSTILL_ON": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "STEERING_TORQUE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "STEER_ANGLE": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "STEER_FRACTION": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "STEER_OVERRIDE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "STEER_RATE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "STEER_TORQUE_DRIVER": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "STEER_TORQUE_EPS": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "SUMMER": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "TC_DISABLED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "TURN_SIGNALS": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "TYPE": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "UI_SET_SPEED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "UNITS": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VALID": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_1": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_10": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_11": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_12": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_13": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_14": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_15": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_16": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_17": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_2": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_3": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_4": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_5": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_6": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_7": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_8": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VIN_9": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "VSC_DISABLED": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_FL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_FR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "YAW_RATE": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "YEAR": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "channel_id": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "source_file": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "ts": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            2.577647,
+            2.103911,
+            2.47079,
+            2.346122,
+            2.130032,
+            2.0956,
+            2.464853
+          ],
+          "p50_ms": 2.346122,
+          "average_ms": 2.312707857142857
+        },
+        {
+          "id": "schema_value",
+          "operation": "Schema fields: value",
+          "sql": "SELECT clp_schema() FROM can.events WHERE _events.WHEEL_SPEED_FR::DOUBLE >= 100 ORDER BY field_path",
+          "result": [
+            [
+              "WHEEL_SPEED_FL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_FR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "channel_id",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "source_file",
+              [
+                "string"
+              ]
+            ],
+            [
+              "ts",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            15.818516,
+            15.988301,
+            15.052701,
+            15.002835,
+            15.752026,
+            15.649918,
+            15.137
+          ],
+          "p50_ms": 15.649918,
+          "average_ms": 15.485899571428572
+        },
+        {
+          "id": "tree_value",
+          "operation": "Schema tree: value",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM can.events WHERE _events.WHEEL_SPEED_FR::DOUBLE >= 100",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "WHEEL_SPEED_FL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_FR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "channel_id": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "source_file": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "ts": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            15.297287,
+            14.796243,
+            17.56386,
+            15.221299,
+            15.528812,
+            15.07051,
+            15.030142
+          ],
+          "p50_ms": 15.221299,
+          "average_ms": 15.501164714285714
+        },
+        {
+          "id": "schema_window",
+          "operation": "Schema fields: window",
+          "sql": "SELECT clp_schema() FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001' AND _events.WHEEL_SPEED_FR::DOUBLE IS NOT NULL AND _events.ts::BIGINT >= 9734164 AND _events.ts::BIGINT < 9735164 ORDER BY field_path",
+          "result": [
+            [
+              "WHEEL_SPEED_FL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_FR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "channel_id",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "source_file",
+              [
+                "string"
+              ]
+            ],
+            [
+              "ts",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            178.424019,
+            182.489365,
+            166.909499,
+            171.598181,
+            179.889159,
+            180.450755,
+            178.878759
+          ],
+          "p50_ms": 178.878759,
+          "average_ms": 176.94853385714285
+        },
+        {
+          "id": "tree_window",
+          "operation": "Schema tree: window",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001' AND _events.WHEEL_SPEED_FR::DOUBLE IS NOT NULL AND _events.ts::BIGINT >= 9734164 AND _events.ts::BIGINT < 9735164",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "WHEEL_SPEED_FL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_FR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "channel_id": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "source_file": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "ts": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            180.526744,
+            180.727399,
+            179.267009,
+            179.38574,
+            180.358145,
+            177.962157,
+            179.192208
+          ],
+          "p50_ms": 179.38574,
+          "average_ms": 179.63134314285713
+        },
+        {
+          "id": "schema_derived",
+          "operation": "Schema fields: derived",
+          "sql": "SELECT clp_schema() FROM can.events WHERE _events.WHEEL_SPEED_FR::DOUBLE > _events.WHEEL_SPEED_FL::DOUBLE ORDER BY field_path",
+          "result": [
+            [
+              "WHEEL_SPEED_FL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_FR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "channel_id",
+              [
+                "integer"
+              ]
+            ],
+            [
+              "source_file",
+              [
+                "string"
+              ]
+            ],
+            [
+              "ts",
+              [
+                "integer"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            21.999645,
+            22.000833,
+            32.058525,
+            22.040013,
+            22.338028,
+            21.867854,
+            22.443698
+          ],
+          "p50_ms": 22.040013,
+          "average_ms": 23.535513714285717
+        },
+        {
+          "id": "tree_derived",
+          "operation": "Schema tree: derived",
+          "sql": "SELECT clp_schema_tree() AS schema_tree FROM can.events WHERE _events.WHEEL_SPEED_FR::DOUBLE > _events.WHEEL_SPEED_FL::DOUBLE",
+          "result": [
+            [
+              {
+                "types": [
+                  "object"
+                ],
+                "children": {
+                  "WHEEL_SPEED_FL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_FR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RL": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "WHEEL_SPEED_RR": {
+                    "types": [
+                      "float"
+                    ],
+                    "children": {}
+                  },
+                  "channel_id": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  },
+                  "source_file": {
+                    "types": [
+                      "string"
+                    ],
+                    "children": {}
+                  },
+                  "ts": {
+                    "types": [
+                      "integer"
+                    ],
+                    "children": {}
+                  }
+                }
+              }
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            21.861917,
+            22.228796,
+            21.426175,
+            21.372746,
+            22.243043,
+            22.002019,
+            22.602798
+          ],
+          "p50_ms": 22.002019,
+          "average_ms": 21.962499142857144
+        },
+        {
+          "id": "schema_paths",
+          "operation": "Filter the returned field paths",
+          "sql": "SELECT * FROM (SELECT clp_schema() FROM can.events) f WHERE starts_with(field_path,'WHEEL_SPEED_') ORDER BY field_path",
+          "result": [
+            [
+              "WHEEL_SPEED_FL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_FR",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RL",
+              [
+                "float"
+              ]
+            ],
+            [
+              "WHEEL_SPEED_RR",
+              [
+                "float"
+              ]
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.856951,
+            1.719224,
+            2.096787,
+            2.084914,
+            1.82608,
+            1.702601,
+            2.090851
+          ],
+          "p50_ms": 1.856951,
+          "average_ms": 1.9110582857142857
+        },
+        {
+          "id": "schema_empty",
+          "operation": "Schema of an empty selection",
+          "sql": "SELECT clp_schema() FROM can.events WHERE _events.WHEEL_SPEED_FR::DOUBLE > 1e100",
+          "result": [],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.334535,
+            1.542314,
+            1.840329,
+            1.291792,
+            1.575559,
+            1.282293,
+            1.277545
+          ],
+          "p50_ms": 1.334535,
+          "average_ms": 1.4491952857142858
+        },
+        {
+          "id": "history_first",
+          "operation": "Field history in original units: first",
+          "sql": "SELECT clp_first_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS first_seen FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001'",
+          "result": [
+            [
+              9734164
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            175.354827,
+            173.827947,
+            173.084692,
+            173.964488,
+            175.506802,
+            174.190076,
+            170.298078
+          ],
+          "p50_ms": 173.964488,
+          "average_ms": 173.7467014285714
+        },
+        {
+          "id": "history_last",
+          "operation": "Field history in original units: last",
+          "sql": "SELECT clp_last_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS last_seen FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001'",
+          "result": [
+            [
+              9794150
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            175.072247,
+            174.266064,
+            179.065166,
+            173.577425,
+            173.807763,
+            173.451571,
+            177.601215
+          ],
+          "p50_ms": 174.266064,
+          "average_ms": 175.26306442857143
+        },
+        {
+          "id": "history_both",
+          "operation": "Field history in original units: both",
+          "sql": "SELECT clp_first_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS first_seen, clp_last_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS last_seen FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001'",
+          "result": [
+            [
+              9734164,
+              9794150
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            178.916753,
+            179.880848,
+            165.546468,
+            173.117936,
+            178.853825,
+            168.786634,
+            164.69873
+          ],
+          "p50_ms": 173.117936,
+          "average_ms": 172.828742
+        },
+        {
+          "id": "history_inventory",
+          "operation": "First/last seen for all fields",
+          "sql": "SELECT field_path,first_seen,last_seen,matching_rows FROM clp_dataset_fields('can', time_path='ts', start_value=0, predicate='_events.source_file::VARCHAR=''rav4_c01_s0001''') ORDER BY field_path",
+          "result": [
+            [
+              "ACCEL_NET",
+              9734144,
+              9794128,
+              1890
+            ],
+            [
+              "ACCEL_Y",
+              9734155,
+              9794150,
+              4973
+            ],
+            [
+              "AUTO_HIGH_BEAM",
+              9734282,
+              9793300,
+              60
+            ],
+            [
+              "BRAKE_LIGHTS_ACC",
+              9734430,
+              9794150,
+              199
+            ],
+            [
+              "BRAKE_PRESSED",
+              9734150,
+              9794150,
+              2487
+            ],
+            [
+              "BRAKE_PRESSURE",
+              9734150,
+              9794150,
+              2487
+            ],
+            [
+              "CANCEL_REQ",
+              9734144,
+              9794128,
+              1890
+            ],
+            [
+              "CHECKSUM",
+              9734139,
+              9794150,
+              49153
+            ],
+            [
+              "COUNTER",
+              9734139,
+              9794116,
+              38388
+            ],
+            [
+              "CRUISE_ACTIVE",
+              9734144,
+              9794128,
+              1890
+            ],
+            [
+              "CRUISE_CONTROL_STATE",
+              9734896,
+              9793984,
+              59
+            ],
+            [
+              "CRUISE_STATE",
+              9734144,
+              9794128,
+              1890
+            ],
+            [
+              "DAY",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "DISTANCE_LINES",
+              9734896,
+              9793984,
+              59
+            ],
+            [
+              "DOOR_OPEN_FL",
+              9734180,
+              9793895,
+              200
+            ],
+            [
+              "DOOR_OPEN_FR",
+              9734180,
+              9793895,
+              200
+            ],
+            [
+              "DOOR_OPEN_RL",
+              9734180,
+              9793895,
+              200
+            ],
+            [
+              "DOOR_OPEN_RR",
+              9734180,
+              9793895,
+              200
+            ],
+            [
+              "ENCODER",
+              9734172,
+              9794128,
+              2486
+            ],
+            [
+              "FRONT_FOG",
+              9734282,
+              9793300,
+              60
+            ],
+            [
+              "GAS_PEDAL",
+              9734191,
+              9794128,
+              1889
+            ],
+            [
+              "GAS_RELEASED",
+              9734144,
+              9794128,
+              3779
+            ],
+            [
+              "GEAR",
+              9734796,
+              9793722,
+              67
+            ],
+            [
+              "GMTDIFF_HOURS",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "GMTDIFF_MINUTES",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "GMT_DIFF",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "HAZARD_LIGHT",
+              9735507,
+              9790750,
+              14
+            ],
+            [
+              "HIGH_BEAM",
+              9734282,
+              9793300,
+              60
+            ],
+            [
+              "HOUR",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "IPAS_STATE",
+              9734172,
+              9794150,
+              1500
+            ],
+            [
+              "LAT_DIST",
+              9734139,
+              9794111,
+              19188
+            ],
+            [
+              "LKA_STATE",
+              9734172,
+              9794150,
+              1500
+            ],
+            [
+              "LONG_DIST",
+              9734139,
+              9794111,
+              19188
+            ],
+            [
+              "LOW_BEAM",
+              9734282,
+              9793300,
+              60
+            ],
+            [
+              "LOW_SPEED_LOCKOUT",
+              9734186,
+              9794150,
+              1890
+            ],
+            [
+              "MAIN_ON",
+              9734186,
+              9794150,
+              1949
+            ],
+            [
+              "MINUTE",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "MONTH",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "NEW_TRACK",
+              9734139,
+              9794111,
+              19188
+            ],
+            [
+              "ODOMETER",
+              9735106,
+              9793367,
+              60
+            ],
+            [
+              "PARKING_LIGHT",
+              9734282,
+              9793300,
+              60
+            ],
+            [
+              "REL_ACCEL",
+              9734147,
+              9794116,
+              19200
+            ],
+            [
+              "REL_SPEED",
+              9734139,
+              9794111,
+              19188
+            ],
+            [
+              "RPM",
+              9734185,
+              9794150,
+              2547
+            ],
+            [
+              "SCORE",
+              9734147,
+              9794116,
+              19200
+            ],
+            [
+              "SEATBELT_DRIVER_UNLATCHED",
+              9734180,
+              9793895,
+              200
+            ],
+            [
+              "SET_SPEED",
+              9734186,
+              9794150,
+              1890
+            ],
+            [
+              "SPEED",
+              9734172,
+              9794128,
+              2486
+            ],
+            [
+              "STANDSTILL_ON",
+              9734144,
+              9794128,
+              1890
+            ],
+            [
+              "STEERING_TORQUE",
+              9734155,
+              9794150,
+              4973
+            ],
+            [
+              "STEER_ANGLE",
+              9734150,
+              9794150,
+              7972
+            ],
+            [
+              "STEER_FRACTION",
+              9734150,
+              9794150,
+              4973
+            ],
+            [
+              "STEER_OVERRIDE",
+              9734169,
+              9794150,
+              2999
+            ],
+            [
+              "STEER_RATE",
+              9734150,
+              9794150,
+              4973
+            ],
+            [
+              "STEER_TORQUE_DRIVER",
+              9734169,
+              9794150,
+              2999
+            ],
+            [
+              "STEER_TORQUE_EPS",
+              9734169,
+              9794150,
+              2999
+            ],
+            [
+              "SUMMER",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "TC_DISABLED",
+              9734430,
+              9794150,
+              199
+            ],
+            [
+              "TURN_SIGNALS",
+              9735507,
+              9790750,
+              14
+            ],
+            [
+              "TYPE",
+              9734172,
+              9794150,
+              1500
+            ],
+            [
+              "UI_SET_SPEED",
+              9734896,
+              9793984,
+              59
+            ],
+            [
+              "UNITS",
+              9735106,
+              9793367,
+              60
+            ],
+            [
+              "VALID",
+              9734139,
+              9794111,
+              19188
+            ],
+            [
+              "VIN_1",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_10",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_11",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_12",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_13",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_14",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_15",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_16",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VIN_17",
+              9734758,
+              9793262,
+              40
+            ],
+            [
+              "VIN_2",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_3",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_4",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_5",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_6",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_7",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_8",
+              9734740,
+              9793251,
+              40
+            ],
+            [
+              "VIN_9",
+              9734752,
+              9793251,
+              40
+            ],
+            [
+              "VSC_DISABLED",
+              9734430,
+              9794150,
+              199
+            ],
+            [
+              "WHEEL_SPEED_FL",
+              9734164,
+              9794150,
+              4973
+            ],
+            [
+              "WHEEL_SPEED_FR",
+              9734164,
+              9794150,
+              4973
+            ],
+            [
+              "WHEEL_SPEED_RL",
+              9734164,
+              9794150,
+              4973
+            ],
+            [
+              "WHEEL_SPEED_RR",
+              9734164,
+              9794150,
+              4973
+            ],
+            [
+              "YAW_RATE",
+              9734155,
+              9794150,
+              4973
+            ],
+            [
+              "YEAR",
+              9734219,
+              9793216,
+              60
+            ],
+            [
+              "channel_id",
+              9734139,
+              9794150,
+              71834
+            ],
+            [
+              "source_file",
+              9734139,
+              9794150,
+              71834
+            ],
+            [
+              "ts",
+              9734139,
+              9794150,
+              71834
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            2154.88714,
+            2204.120087,
+            2175.97968,
+            2173.887642,
+            2232.615498,
+            2151.042633,
+            2153.695082
+          ],
+          "p50_ms": 2173.887642,
+          "average_ms": 2178.0325374285712
+        },
+        {
+          "id": "history_filtered",
+          "operation": "Field history with a value predicate",
+          "sql": "SELECT clp_first_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS first_seen, clp_last_seen(_events.WHEEL_SPEED_FR, _events.ts::BIGINT) AS last_seen FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001' AND _events.WHEEL_SPEED_FR::DOUBLE >= 100",
+          "result": [
+            [
+              9734164,
+              9794150
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            187.815633,
+            189.731949,
+            184.89604,
+            184.930472,
+            185.114505,
+            184.892478,
+            204.168437
+          ],
+          "p50_ms": 185.114505,
+          "average_ms": 188.7927877142857
+        },
+        {
+          "id": "history_aggregate_explicit",
+          "operation": "First/last aggregate with explicit clock conversion",
+          "sql": "SELECT epoch_ms(clp_first_seen(_events.WHEEL_SPEED_FR, epoch_ms(_events.ts::BIGINT * 1))) // 1 AS first_seen,epoch_ms(clp_last_seen(_events.WHEEL_SPEED_FR, epoch_ms(_events.ts::BIGINT * 1))) // 1 AS last_seen FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001'",
+          "result": [
+            [
+              9734164,
+              9794150
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            985.176614,
+            970.987086,
+            1009.715913,
+            970.769809,
+            989.843926,
+            951.481977,
+            991.195082
+          ],
+          "p50_ms": 985.176614,
+          "average_ms": 981.3100581428571
+        },
+        {
+          "id": "history_raw_clock",
+          "operation": "Raw relative clock is not a declared timestamp",
+          "sql": "SELECT clp_first_seen(_events.WHEEL_SPEED_FR,_events.ts),clp_last_seen(_events.WHEEL_SPEED_FR,_events.ts) FROM can.events WHERE _events.source_file::VARCHAR='rav4_c01_s0001'",
+          "result": [
+            [
+              null,
+              null
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            230.303478,
+            228.536763,
+            227.164234,
+            229.141103,
+            229.290704,
+            229.384501,
+            230.51007
+          ],
+          "p50_ms": 229.290704,
+          "average_ms": 229.19012185714286
+        },
+        {
+          "id": "shapes_all",
+          "operation": "String-shape counts: all",
+          "sql": "SELECT clp_string_shape(_events.source_file::VARCHAR) AS shape,count(*) AS n FROM can.events  GROUP BY shape ORDER BY n DESC,shape",
+          "result": [
+            [
+              "rav4_c02_s0244",
+              71932
+            ],
+            [
+              "rav4_c01_s0012",
+              71922
+            ],
+            [
+              "rav4_c02_s0374",
+              71899
+            ],
+            [
+              "rav4_c02_s0361",
+              71894
+            ],
+            [
+              "rav4_c01_s0124",
+              71893
+            ],
+            [
+              "rav4_c01_s0074",
+              71890
+            ],
+            [
+              "rav4_c01_s0039",
+              71889
+            ],
+            [
+              "rav4_c01_s0179",
+              71889
+            ],
+            [
+              "rav4_c02_s0258",
+              71888
+            ],
+            [
+              "rav4_c02_s0379",
+              71886
+            ],
+            [
+              "rav4_c02_s0228",
+              71885
+            ],
+            [
+              "rav4_c02_s0253",
+              71884
+            ],
+            [
+              "rav4_c01_s0188",
+              71883
+            ],
+            [
+              "rav4_c02_s0363",
+              71880
+            ],
+            [
+              "rav4_c02_s0196",
+              71879
+            ],
+            [
+              "rav4_c02_s0279",
+              71878
+            ],
+            [
+              "rav4_c02_s0319",
+              71878
+            ],
+            [
+              "rav4_c01_s0002",
+              71873
+            ],
+            [
+              "rav4_c01_s0169",
+              71873
+            ],
+            [
+              "rav4_c01_s0022",
+              71872
+            ],
+            [
+              "rav4_c01_s0072",
+              71872
+            ],
+            [
+              "rav4_c01_s0078",
+              71872
+            ],
+            [
+              "rav4_c01_s0097",
+              71872
+            ],
+            [
+              "rav4_c01_s0153",
+              71871
+            ],
+            [
+              "rav4_c02_s0293",
+              71871
+            ],
+            [
+              "rav4_c02_s0299",
+              71871
+            ],
+            [
+              "rav4_c02_s0376",
+              71871
+            ],
+            [
+              "rav4_c01_s0067",
+              71870
+            ],
+            [
+              "rav4_c01_s0164",
+              71870
+            ],
+            [
+              "rav4_c02_s0256",
+              71870
+            ],
+            [
+              "rav4_c01_s0129",
+              71869
+            ],
+            [
+              "rav4_c02_s0272",
+              71869
+            ],
+            [
+              "rav4_c02_s0348",
+              71869
+            ],
+            [
+              "rav4_c01_s0044",
+              71868
+            ],
+            [
+              "rav4_c02_s0310",
+              71868
+            ],
+            [
+              "rav4_c02_s0254",
+              71867
+            ],
+            [
+              "rav4_c02_s0260",
+              71867
+            ],
+            [
+              "rav4_c02_s0331",
+              71867
+            ],
+            [
+              "rav4_c01_s0065",
+              71866
+            ],
+            [
+              "rav4_c01_s0139",
+              71866
+            ],
+            [
+              "rav4_c01_s0150",
+              71866
+            ],
+            [
+              "rav4_c01_s0178",
+              71866
+            ],
+            [
+              "rav4_c02_s0221",
+              71866
+            ],
+            [
+              "rav4_c02_s0375",
+              71866
+            ],
+            [
+              "rav4_c01_s0185",
+              71865
+            ],
+            [
+              "rav4_c02_s0236",
+              71865
+            ],
+            [
+              "rav4_c02_s0278",
+              71865
+            ],
+            [
+              "rav4_c02_s0381",
+              71865
+            ],
+            [
+              "rav4_c01_s0057",
+              71864
+            ],
+            [
+              "rav4_c01_s0092",
+              71864
+            ],
+            [
+              "rav4_c02_s0203",
+              71864
+            ],
+            [
+              "rav4_c02_s0229",
+              71864
+            ],
+            [
+              "rav4_c02_s0304",
+              71864
+            ],
+            [
+              "rav4_c02_s0329",
+              71864
+            ],
+            [
+              "rav4_c01_s0134",
+              71863
+            ],
+            [
+              "rav4_c01_s0142",
+              71863
+            ],
+            [
+              "rav4_c01_s0187",
+              71863
+            ],
+            [
+              "rav4_c02_s0231",
+              71863
+            ],
+            [
+              "rav4_c01_s0033",
+              71862
+            ],
+            [
+              "rav4_c01_s0036",
+              71862
+            ],
+            [
+              "rav4_c01_s0063",
+              71862
+            ],
+            [
+              "rav4_c01_s0104",
+              71862
+            ],
+            [
+              "rav4_c01_s0115",
+              71862
+            ],
+            [
+              "rav4_c01_s0161",
+              71862
+            ],
+            [
+              "rav4_c02_s0192",
+              71862
+            ],
+            [
+              "rav4_c02_s0289",
+              71862
+            ],
+            [
+              "rav4_c02_s0324",
+              71862
+            ],
+            [
+              "rav4_c02_s0359",
+              71862
+            ],
+            [
+              "rav4_c01_s0038",
+              71861
+            ],
+            [
+              "rav4_c01_s0088",
+              71861
+            ],
+            [
+              "rav4_c01_s0093",
+              71861
+            ],
+            [
+              "rav4_c01_s0136",
+              71861
+            ],
+            [
+              "rav4_c02_s0210",
+              71861
+            ],
+            [
+              "rav4_c02_s0358",
+              71861
+            ],
+            [
+              "rav4_c01_s0080",
+              71860
+            ],
+            [
+              "rav4_c01_s0090",
+              71860
+            ],
+            [
+              "rav4_c01_s0091",
+              71860
+            ],
+            [
+              "rav4_c01_s0158",
+              71860
+            ],
+            [
+              "rav4_c01_s0184",
+              71860
+            ],
+            [
+              "rav4_c02_s0191",
+              71860
+            ],
+            [
+              "rav4_c02_s0208",
+              71860
+            ],
+            [
+              "rav4_c02_s0261",
+              71860
+            ],
+            [
+              "rav4_c02_s0351",
+              71860
+            ],
+            [
+              "rav4_c01_s0011",
+              71859
+            ],
+            [
+              "rav4_c01_s0068",
+              71859
+            ],
+            [
+              "rav4_c02_s0268",
+              71859
+            ],
+            [
+              "rav4_c02_s0303",
+              71859
+            ],
+            [
+              "rav4_c01_s0045",
+              71858
+            ],
+            [
+              "rav4_c02_s0230",
+              71858
+            ],
+            [
+              "rav4_c02_s0235",
+              71858
+            ],
+            [
+              "rav4_c02_s0262",
+              71858
+            ],
+            [
+              "rav4_c02_s0352",
+              71858
+            ],
+            [
+              "rav4_c02_s0372",
+              71858
+            ],
+            [
+              "rav4_c01_s0017",
+              71857
+            ],
+            [
+              "rav4_c01_s0130",
+              71857
+            ],
+            [
+              "rav4_c01_s0160",
+              71857
+            ],
+            [
+              "rav4_c01_s0180",
+              71857
+            ],
+            [
+              "rav4_c02_s0226",
+              71857
+            ],
+            [
+              "rav4_c02_s0232",
+              71857
+            ],
+            [
+              "rav4_c02_s0234",
+              71857
+            ],
+            [
+              "rav4_c02_s0250",
+              71857
+            ],
+            [
+              "rav4_c02_s0283",
+              71857
+            ],
+            [
+              "rav4_c02_s0284",
+              71857
+            ],
+            [
+              "rav4_c02_s0314",
+              71857
+            ],
+            [
+              "rav4_c02_s0316",
+              71857
+            ],
+            [
+              "rav4_c02_s0377",
+              71857
+            ],
+            [
+              "rav4_c01_s0010",
+              71856
+            ],
+            [
+              "rav4_c01_s0118",
+              71856
+            ],
+            [
+              "rav4_c01_s0163",
+              71856
+            ],
+            [
+              "rav4_c02_s0200",
+              71856
+            ],
+            [
+              "rav4_c02_s0217",
+              71856
+            ],
+            [
+              "rav4_c02_s0243",
+              71856
+            ],
+            [
+              "rav4_c02_s0297",
+              71856
+            ],
+            [
+              "rav4_c02_s0317",
+              71856
+            ],
+            [
+              "rav4_c02_s0357",
+              71856
+            ],
+            [
+              "rav4_c02_s0360",
+              71856
+            ],
+            [
+              "rav4_c02_s0370",
+              71856
+            ],
+            [
+              "rav4_c02_s0373",
+              71856
+            ],
+            [
+              "rav4_c01_s0070",
+              71855
+            ],
+            [
+              "rav4_c01_s0081",
+              71855
+            ],
+            [
+              "rav4_c01_s0089",
+              71855
+            ],
+            [
+              "rav4_c01_s0100",
+              71855
+            ],
+            [
+              "rav4_c01_s0122",
+              71855
+            ],
+            [
+              "rav4_c01_s0148",
+              71855
+            ],
+            [
+              "rav4_c01_s0174",
+              71855
+            ],
+            [
+              "rav4_c02_s0189",
+              71855
+            ],
+            [
+              "rav4_c02_s0225",
+              71855
+            ],
+            [
+              "rav4_c02_s0298",
+              71855
+            ],
+            [
+              "rav4_c02_s0318",
+              71855
+            ],
+            [
+              "rav4_c02_s0378",
+              71855
+            ],
+            [
+              "rav4_c01_s0107",
+              71854
+            ],
+            [
+              "rav4_c01_s0152",
+              71854
+            ],
+            [
+              "rav4_c01_s0155",
+              71854
+            ],
+            [
+              "rav4_c01_s0157",
+              71854
+            ],
+            [
+              "rav4_c02_s0287",
+              71854
+            ],
+            [
+              "rav4_c02_s0306",
+              71854
+            ],
+            [
+              "rav4_c02_s0327",
+              71854
+            ],
+            [
+              "rav4_c02_s0335",
+              71854
+            ],
+            [
+              "rav4_c02_s0338",
+              71854
+            ],
+            [
+              "rav4_c02_s0356",
+              71854
+            ],
+            [
+              "rav4_c01_s0026",
+              71853
+            ],
+            [
+              "rav4_c01_s0043",
+              71853
+            ],
+            [
+              "rav4_c01_s0054",
+              71853
+            ],
+            [
+              "rav4_c01_s0059",
+              71853
+            ],
+            [
+              "rav4_c01_s0110",
+              71853
+            ],
+            [
+              "rav4_c01_s0146",
+              71853
+            ],
+            [
+              "rav4_c01_s0154",
+              71853
+            ],
+            [
+              "rav4_c01_s0176",
+              71853
+            ],
+            [
+              "rav4_c02_s0332",
+              71853
+            ],
+            [
+              "rav4_c02_s0362",
+              71853
+            ],
+            [
+              "rav4_c01_s0029",
+              71852
+            ],
+            [
+              "rav4_c01_s0047",
+              71852
+            ],
+            [
+              "rav4_c01_s0048",
+              71852
+            ],
+            [
+              "rav4_c01_s0121",
+              71852
+            ],
+            [
+              "rav4_c01_s0165",
+              71852
+            ],
+            [
+              "rav4_c01_s0183",
+              71852
+            ],
+            [
+              "rav4_c02_s0222",
+              71852
+            ],
+            [
+              "rav4_c02_s0223",
+              71852
+            ],
+            [
+              "rav4_c02_s0270",
+              71852
+            ],
+            [
+              "rav4_c02_s0277",
+              71852
+            ],
+            [
+              "rav4_c02_s0301",
+              71852
+            ],
+            [
+              "rav4_c02_s0311",
+              71852
+            ],
+            [
+              "rav4_c02_s0353",
+              71852
+            ],
+            [
+              "rav4_c01_s0035",
+              71851
+            ],
+            [
+              "rav4_c01_s0040",
+              71851
+            ],
+            [
+              "rav4_c01_s0052",
+              71851
+            ],
+            [
+              "rav4_c01_s0073",
+              71851
+            ],
+            [
+              "rav4_c01_s0096",
+              71851
+            ],
+            [
+              "rav4_c01_s0099",
+              71851
+            ],
+            [
+              "rav4_c01_s0112",
+              71851
+            ],
+            [
+              "rav4_c01_s0123",
+              71851
+            ],
+            [
+              "rav4_c01_s0125",
+              71851
+            ],
+            [
+              "rav4_c01_s0159",
+              71851
+            ],
+            [
+              "rav4_c01_s0173",
+              71851
+            ],
+            [
+              "rav4_c02_s0201",
+              71851
+            ],
+            [
+              "rav4_c02_s0207",
+              71851
+            ],
+            [
+              "rav4_c02_s0218",
+              71851
+            ],
+            [
+              "rav4_c02_s0251",
+              71851
+            ],
+            [
+              "rav4_c02_s0280",
+              71851
+            ],
+            [
+              "rav4_c02_s0296",
+              71851
+            ],
+            [
+              "rav4_c02_s0307",
+              71851
+            ],
+            [
+              "rav4_c02_s0309",
+              71851
+            ],
+            [
+              "rav4_c02_s0315",
+              71851
+            ],
+            [
+              "rav4_c02_s0325",
+              71851
+            ],
+            [
+              "rav4_c02_s0346",
+              71851
+            ],
+            [
+              "rav4_c02_s0349",
+              71851
+            ],
+            [
+              "rav4_c01_s0004",
+              71850
+            ],
+            [
+              "rav4_c01_s0049",
+              71850
+            ],
+            [
+              "rav4_c01_s0066",
+              71850
+            ],
+            [
+              "rav4_c01_s0102",
+              71850
+            ],
+            [
+              "rav4_c01_s0109",
+              71850
+            ],
+            [
+              "rav4_c01_s0182",
+              71850
+            ],
+            [
+              "rav4_c02_s0194",
+              71850
+            ],
+            [
+              "rav4_c02_s0197",
+              71850
+            ],
+            [
+              "rav4_c02_s0206",
+              71850
+            ],
+            [
+              "rav4_c02_s0237",
+              71850
+            ],
+            [
+              "rav4_c02_s0242",
+              71850
+            ],
+            [
+              "rav4_c02_s0282",
+              71850
+            ],
+            [
+              "rav4_c02_s0292",
+              71850
+            ],
+            [
+              "rav4_c02_s0302",
+              71850
+            ],
+            [
+              "rav4_c02_s0308",
+              71850
+            ],
+            [
+              "rav4_c02_s0322",
+              71850
+            ],
+            [
+              "rav4_c01_s0042",
+              71849
+            ],
+            [
+              "rav4_c01_s0046",
+              71849
+            ],
+            [
+              "rav4_c01_s0053",
+              71849
+            ],
+            [
+              "rav4_c01_s0087",
+              71849
+            ],
+            [
+              "rav4_c01_s0095",
+              71849
+            ],
+            [
+              "rav4_c02_s0195",
+              71849
+            ],
+            [
+              "rav4_c02_s0209",
+              71849
+            ],
+            [
+              "rav4_c02_s0212",
+              71849
+            ],
+            [
+              "rav4_c02_s0224",
+              71849
+            ],
+            [
+              "rav4_c02_s0266",
+              71849
+            ],
+            [
+              "rav4_c02_s0288",
+              71849
+            ],
+            [
+              "rav4_c02_s0295",
+              71849
+            ],
+            [
+              "rav4_c02_s0328",
+              71849
+            ],
+            [
+              "rav4_c02_s0345",
+              71849
+            ],
+            [
+              "rav4_c02_s0369",
+              71849
+            ],
+            [
+              "rav4_c01_s0021",
+              71848
+            ],
+            [
+              "rav4_c01_s0030",
+              71848
+            ],
+            [
+              "rav4_c01_s0105",
+              71848
+            ],
+            [
+              "rav4_c01_s0141",
+              71848
+            ],
+            [
+              "rav4_c01_s0170",
+              71848
+            ],
+            [
+              "rav4_c01_s0186",
+              71848
+            ],
+            [
+              "rav4_c02_s0190",
+              71848
+            ],
+            [
+              "rav4_c02_s0205",
+              71848
+            ],
+            [
+              "rav4_c02_s0241",
+              71848
+            ],
+            [
+              "rav4_c02_s0294",
+              71848
+            ],
+            [
+              "rav4_c02_s0326",
+              71848
+            ],
+            [
+              "rav4_c02_s0337",
+              71848
+            ],
+            [
+              "rav4_c02_s0347",
+              71848
+            ],
+            [
+              "rav4_c01_s0025",
+              71847
+            ],
+            [
+              "rav4_c01_s0051",
+              71847
+            ],
+            [
+              "rav4_c01_s0076",
+              71847
+            ],
+            [
+              "rav4_c01_s0111",
+              71847
+            ],
+            [
+              "rav4_c01_s0114",
+              71847
+            ],
+            [
+              "rav4_c01_s0135",
+              71847
+            ],
+            [
+              "rav4_c01_s0162",
+              71847
+            ],
+            [
+              "rav4_c01_s0166",
+              71847
+            ],
+            [
+              "rav4_c01_s0171",
+              71847
+            ],
+            [
+              "rav4_c02_s0213",
+              71847
+            ],
+            [
+              "rav4_c02_s0248",
+              71847
+            ],
+            [
+              "rav4_c02_s0276",
+              71847
+            ],
+            [
+              "rav4_c02_s0341",
+              71847
+            ],
+            [
+              "rav4_c02_s0342",
+              71847
+            ],
+            [
+              "rav4_c02_s0350",
+              71847
+            ],
+            [
+              "rav4_c02_s0364",
+              71847
+            ],
+            [
+              "rav4_c02_s0382",
+              71847
+            ],
+            [
+              "rav4_c01_s0007",
+              71846
+            ],
+            [
+              "rav4_c01_s0009",
+              71846
+            ],
+            [
+              "rav4_c01_s0015",
+              71846
+            ],
+            [
+              "rav4_c01_s0019",
+              71846
+            ],
+            [
+              "rav4_c01_s0023",
+              71846
+            ],
+            [
+              "rav4_c01_s0056",
+              71846
+            ],
+            [
+              "rav4_c01_s0083",
+              71846
+            ],
+            [
+              "rav4_c01_s0106",
+              71846
+            ],
+            [
+              "rav4_c01_s0131",
+              71846
+            ],
+            [
+              "rav4_c01_s0175",
+              71846
+            ],
+            [
+              "rav4_c02_s0198",
+              71846
+            ],
+            [
+              "rav4_c02_s0211",
+              71846
+            ],
+            [
+              "rav4_c02_s0214",
+              71846
+            ],
+            [
+              "rav4_c02_s0247",
+              71846
+            ],
+            [
+              "rav4_c02_s0271",
+              71846
+            ],
+            [
+              "rav4_c02_s0286",
+              71846
+            ],
+            [
+              "rav4_c01_s0008",
+              71845
+            ],
+            [
+              "rav4_c01_s0016",
+              71845
+            ],
+            [
+              "rav4_c01_s0032",
+              71845
+            ],
+            [
+              "rav4_c01_s0062",
+              71845
+            ],
+            [
+              "rav4_c01_s0069",
+              71845
+            ],
+            [
+              "rav4_c01_s0079",
+              71845
+            ],
+            [
+              "rav4_c01_s0086",
+              71845
+            ],
+            [
+              "rav4_c01_s0108",
+              71845
+            ],
+            [
+              "rav4_c01_s0113",
+              71845
+            ],
+            [
+              "rav4_c01_s0119",
+              71845
+            ],
+            [
+              "rav4_c01_s0151",
+              71845
+            ],
+            [
+              "rav4_c01_s0156",
+              71845
+            ],
+            [
+              "rav4_c02_s0199",
+              71845
+            ],
+            [
+              "rav4_c02_s0219",
+              71845
+            ],
+            [
+              "rav4_c02_s0239",
+              71845
+            ],
+            [
+              "rav4_c02_s0265",
+              71845
+            ],
+            [
+              "rav4_c02_s0291",
+              71845
+            ],
+            [
+              "rav4_c01_s0018",
+              71844
+            ],
+            [
+              "rav4_c01_s0041",
+              71844
+            ],
+            [
+              "rav4_c01_s0064",
+              71844
+            ],
+            [
+              "rav4_c01_s0075",
+              71844
+            ],
+            [
+              "rav4_c01_s0117",
+              71844
+            ],
+            [
+              "rav4_c01_s0126",
+              71844
+            ],
+            [
+              "rav4_c01_s0145",
+              71844
+            ],
+            [
+              "rav4_c01_s0147",
+              71844
+            ],
+            [
+              "rav4_c02_s0220",
+              71844
+            ],
+            [
+              "rav4_c02_s0252",
+              71844
+            ],
+            [
+              "rav4_c02_s0263",
+              71844
+            ],
+            [
+              "rav4_c02_s0285",
+              71844
+            ],
+            [
+              "rav4_c02_s0305",
+              71844
+            ],
+            [
+              "rav4_c02_s0333",
+              71844
+            ],
+            [
+              "rav4_c02_s0339",
+              71844
+            ],
+            [
+              "rav4_c02_s0344",
+              71844
+            ],
+            [
+              "rav4_c02_s0355",
+              71844
+            ],
+            [
+              "rav4_c02_s0366",
+              71844
+            ],
+            [
+              "rav4_c01_s0084",
+              71843
+            ],
+            [
+              "rav4_c01_s0094",
+              71843
+            ],
+            [
+              "rav4_c01_s0128",
+              71843
+            ],
+            [
+              "rav4_c01_s0177",
+              71843
+            ],
+            [
+              "rav4_c02_s0204",
+              71843
+            ],
+            [
+              "rav4_c02_s0215",
+              71843
+            ],
+            [
+              "rav4_c02_s0246",
+              71843
+            ],
+            [
+              "rav4_c02_s0249",
+              71843
+            ],
+            [
+              "rav4_c02_s0290",
+              71843
+            ],
+            [
+              "rav4_c02_s0368",
+              71843
+            ],
+            [
+              "rav4_c02_s0371",
+              71843
+            ],
+            [
+              "rav4_c01_s0020",
+              71842
+            ],
+            [
+              "rav4_c01_s0037",
+              71842
+            ],
+            [
+              "rav4_c01_s0050",
+              71842
+            ],
+            [
+              "rav4_c01_s0071",
+              71842
+            ],
+            [
+              "rav4_c01_s0101",
+              71842
+            ],
+            [
+              "rav4_c01_s0143",
+              71842
+            ],
+            [
+              "rav4_c02_s0216",
+              71842
+            ],
+            [
+              "rav4_c02_s0233",
+              71842
+            ],
+            [
+              "rav4_c02_s0264",
+              71842
+            ],
+            [
+              "rav4_c02_s0275",
+              71842
+            ],
+            [
+              "rav4_c02_s0313",
+              71842
+            ],
+            [
+              "rav4_c02_s0320",
+              71842
+            ],
+            [
+              "rav4_c01_s0003",
+              71841
+            ],
+            [
+              "rav4_c01_s0103",
+              71841
+            ],
+            [
+              "rav4_c01_s0116",
+              71841
+            ],
+            [
+              "rav4_c01_s0127",
+              71841
+            ],
+            [
+              "rav4_c01_s0168",
+              71841
+            ],
+            [
+              "rav4_c01_s0172",
+              71841
+            ],
+            [
+              "rav4_c02_s0227",
+              71841
+            ],
+            [
+              "rav4_c02_s0245",
+              71841
+            ],
+            [
+              "rav4_c02_s0255",
+              71841
+            ],
+            [
+              "rav4_c02_s0365",
+              71841
+            ],
+            [
+              "rav4_c01_s0013",
+              71840
+            ],
+            [
+              "rav4_c01_s0014",
+              71840
+            ],
+            [
+              "rav4_c01_s0034",
+              71840
+            ],
+            [
+              "rav4_c01_s0077",
+              71840
+            ],
+            [
+              "rav4_c01_s0085",
+              71840
+            ],
+            [
+              "rav4_c01_s0120",
+              71840
+            ],
+            [
+              "rav4_c01_s0133",
+              71840
+            ],
+            [
+              "rav4_c01_s0138",
+              71840
+            ],
+            [
+              "rav4_c02_s0193",
+              71840
+            ],
+            [
+              "rav4_c02_s0273",
+              71840
+            ],
+            [
+              "rav4_c02_s0300",
+              71840
+            ],
+            [
+              "rav4_c02_s0321",
+              71840
+            ],
+            [
+              "rav4_c02_s0380",
+              71840
+            ],
+            [
+              "rav4_c01_s0028",
+              71839
+            ],
+            [
+              "rav4_c01_s0031",
+              71839
+            ],
+            [
+              "rav4_c01_s0098",
+              71839
+            ],
+            [
+              "rav4_c02_s0312",
+              71839
+            ],
+            [
+              "rav4_c02_s0330",
+              71839
+            ],
+            [
+              "rav4_c02_s0334",
+              71839
+            ],
+            [
+              "rav4_c01_s0006",
+              71838
+            ],
+            [
+              "rav4_c01_s0024",
+              71838
+            ],
+            [
+              "rav4_c01_s0055",
+              71838
+            ],
+            [
+              "rav4_c02_s0274",
+              71838
+            ],
+            [
+              "rav4_c02_s0336",
+              71838
+            ],
+            [
+              "rav4_c02_s0340",
+              71838
+            ],
+            [
+              "rav4_c01_s0149",
+              71837
+            ],
+            [
+              "rav4_c02_s0259",
+              71837
+            ],
+            [
+              "rav4_c02_s0281",
+              71837
+            ],
+            [
+              "rav4_c01_s0167",
+              71836
+            ],
+            [
+              "rav4_c02_s0238",
+              71836
+            ],
+            [
+              "rav4_c02_s0323",
+              71836
+            ],
+            [
+              "rav4_c01_s0082",
+              71835
+            ],
+            [
+              "rav4_c01_s0181",
+              71835
+            ],
+            [
+              "rav4_c01_s0001",
+              71834
+            ],
+            [
+              "rav4_c02_s0202",
+              71834
+            ],
+            [
+              "rav4_c02_s0367",
+              71834
+            ],
+            [
+              "rav4_c02_s0257",
+              71833
+            ],
+            [
+              "rav4_c02_s0269",
+              71833
+            ],
+            [
+              "rav4_c01_s0005",
+              71832
+            ],
+            [
+              "rav4_c01_s0061",
+              71832
+            ],
+            [
+              "rav4_c01_s0137",
+              71832
+            ],
+            [
+              "rav4_c02_s0267",
+              71832
+            ],
+            [
+              "rav4_c02_s0343",
+              71832
+            ],
+            [
+              "rav4_c02_s0354",
+              71832
+            ],
+            [
+              "rav4_c01_s0144",
+              71830
+            ],
+            [
+              "rav4_c01_s0132",
+              71829
+            ],
+            [
+              "rav4_c01_s0140",
+              71829
+            ],
+            [
+              "rav4_c01_s0060",
+              71828
+            ],
+            [
+              "rav4_c01_s0058",
+              71815
+            ],
+            [
+              "rav4_c02_s0240",
+              71784
+            ],
+            [
+              "rav4_c01_s0027",
+              24686
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            1.21343,
+            1.262109,
+            1.376091,
+            1.322662,
+            1.22649,
+            1.245487,
+            1.50432
+          ],
+          "p50_ms": 1.262109,
+          "average_ms": 1.307227
+        },
+        {
+          "id": "shapes_value",
+          "operation": "String-shape counts: value",
+          "sql": "SELECT clp_string_shape(_events.source_file::VARCHAR) AS shape,count(*) AS n FROM can.events WHERE _events.WHEEL_SPEED_FR::DOUBLE >= 100 GROUP BY shape ORDER BY n DESC,shape",
+          "result": [
+            [
+              "rav4_c01_s0088",
+              4975
+            ],
+            [
+              "rav4_c01_s0121",
+              4975
+            ],
+            [
+              "rav4_c02_s0191",
+              4975
+            ],
+            [
+              "rav4_c02_s0317",
+              4975
+            ],
+            [
+              "rav4_c02_s0347",
+              4975
+            ],
+            [
+              "rav4_c01_s0011",
+              4974
+            ],
+            [
+              "rav4_c01_s0012",
+              4974
+            ],
+            [
+              "rav4_c01_s0016",
+              4974
+            ],
+            [
+              "rav4_c01_s0038",
+              4974
+            ],
+            [
+              "rav4_c01_s0047",
+              4974
+            ],
+            [
+              "rav4_c01_s0048",
+              4974
+            ],
+            [
+              "rav4_c01_s0056",
+              4974
+            ],
+            [
+              "rav4_c01_s0068",
+              4974
+            ],
+            [
+              "rav4_c01_s0070",
+              4974
+            ],
+            [
+              "rav4_c01_s0071",
+              4974
+            ],
+            [
+              "rav4_c01_s0072",
+              4974
+            ],
+            [
+              "rav4_c01_s0080",
+              4974
+            ],
+            [
+              "rav4_c01_s0081",
+              4974
+            ],
+            [
+              "rav4_c01_s0095",
+              4974
+            ],
+            [
+              "rav4_c01_s0098",
+              4974
+            ],
+            [
+              "rav4_c01_s0100",
+              4974
+            ],
+            [
+              "rav4_c01_s0105",
+              4974
+            ],
+            [
+              "rav4_c01_s0106",
+              4974
+            ],
+            [
+              "rav4_c01_s0118",
+              4974
+            ],
+            [
+              "rav4_c01_s0119",
+              4974
+            ],
+            [
+              "rav4_c01_s0134",
+              4974
+            ],
+            [
+              "rav4_c01_s0136",
+              4974
+            ],
+            [
+              "rav4_c01_s0152",
+              4974
+            ],
+            [
+              "rav4_c01_s0157",
+              4974
+            ],
+            [
+              "rav4_c01_s0158",
+              4974
+            ],
+            [
+              "rav4_c01_s0159",
+              4974
+            ],
+            [
+              "rav4_c02_s0189",
+              4974
+            ],
+            [
+              "rav4_c02_s0192",
+              4974
+            ],
+            [
+              "rav4_c02_s0193",
+              4974
+            ],
+            [
+              "rav4_c02_s0194",
+              4974
+            ],
+            [
+              "rav4_c02_s0195",
+              4974
+            ],
+            [
+              "rav4_c02_s0210",
+              4974
+            ],
+            [
+              "rav4_c02_s0212",
+              4974
+            ],
+            [
+              "rav4_c02_s0215",
+              4974
+            ],
+            [
+              "rav4_c02_s0217",
+              4974
+            ],
+            [
+              "rav4_c02_s0218",
+              4974
+            ],
+            [
+              "rav4_c02_s0220",
+              4974
+            ],
+            [
+              "rav4_c02_s0221",
+              4974
+            ],
+            [
+              "rav4_c02_s0229",
+              4974
+            ],
+            [
+              "rav4_c02_s0231",
+              4974
+            ],
+            [
+              "rav4_c02_s0233",
+              4974
+            ],
+            [
+              "rav4_c02_s0243",
+              4974
+            ],
+            [
+              "rav4_c02_s0248",
+              4974
+            ],
+            [
+              "rav4_c02_s0250",
+              4974
+            ],
+            [
+              "rav4_c02_s0252",
+              4974
+            ],
+            [
+              "rav4_c02_s0279",
+              4974
+            ],
+            [
+              "rav4_c02_s0280",
+              4974
+            ],
+            [
+              "rav4_c02_s0292",
+              4974
+            ],
+            [
+              "rav4_c02_s0304",
+              4974
+            ],
+            [
+              "rav4_c02_s0320",
+              4974
+            ],
+            [
+              "rav4_c02_s0321",
+              4974
+            ],
+            [
+              "rav4_c02_s0324",
+              4974
+            ],
+            [
+              "rav4_c02_s0331",
+              4974
+            ],
+            [
+              "rav4_c02_s0332",
+              4974
+            ],
+            [
+              "rav4_c02_s0333",
+              4974
+            ],
+            [
+              "rav4_c02_s0353",
+              4974
+            ],
+            [
+              "rav4_c02_s0373",
+              4974
+            ],
+            [
+              "rav4_c02_s0379",
+              4974
+            ],
+            [
+              "rav4_c02_s0380",
+              4974
+            ],
+            [
+              "rav4_c02_s0381",
+              4974
+            ],
+            [
+              "rav4_c01_s0001",
+              4973
+            ],
+            [
+              "rav4_c01_s0008",
+              4973
+            ],
+            [
+              "rav4_c01_s0009",
+              4973
+            ],
+            [
+              "rav4_c01_s0049",
+              4973
+            ],
+            [
+              "rav4_c01_s0055",
+              4973
+            ],
+            [
+              "rav4_c01_s0057",
+              4973
+            ],
+            [
+              "rav4_c01_s0058",
+              4973
+            ],
+            [
+              "rav4_c01_s0059",
+              4973
+            ],
+            [
+              "rav4_c01_s0064",
+              4973
+            ],
+            [
+              "rav4_c01_s0065",
+              4973
+            ],
+            [
+              "rav4_c01_s0069",
+              4973
+            ],
+            [
+              "rav4_c01_s0082",
+              4973
+            ],
+            [
+              "rav4_c01_s0089",
+              4973
+            ],
+            [
+              "rav4_c01_s0096",
+              4973
+            ],
+            [
+              "rav4_c01_s0101",
+              4973
+            ],
+            [
+              "rav4_c01_s0110",
+              4973
+            ],
+            [
+              "rav4_c01_s0120",
+              4973
+            ],
+            [
+              "rav4_c01_s0122",
+              4973
+            ],
+            [
+              "rav4_c01_s0135",
+              4973
+            ],
+            [
+              "rav4_c01_s0137",
+              4973
+            ],
+            [
+              "rav4_c01_s0138",
+              4973
+            ],
+            [
+              "rav4_c01_s0154",
+              4973
+            ],
+            [
+              "rav4_c01_s0155",
+              4973
+            ],
+            [
+              "rav4_c01_s0156",
+              4973
+            ],
+            [
+              "rav4_c01_s0160",
+              4973
+            ],
+            [
+              "rav4_c02_s0190",
+              4973
+            ],
+            [
+              "rav4_c02_s0211",
+              4973
+            ],
+            [
+              "rav4_c02_s0216",
+              4973
+            ],
+            [
+              "rav4_c02_s0228",
+              4973
+            ],
+            [
+              "rav4_c02_s0242",
+              4973
+            ],
+            [
+              "rav4_c02_s0244",
+              4973
+            ],
+            [
+              "rav4_c02_s0249",
+              4973
+            ],
+            [
+              "rav4_c02_s0251",
+              4973
+            ],
+            [
+              "rav4_c02_s0322",
+              4973
+            ],
+            [
+              "rav4_c02_s0323",
+              4973
+            ],
+            [
+              "rav4_c02_s0330",
+              4973
+            ],
+            [
+              "rav4_c02_s0334",
+              4973
+            ],
+            [
+              "rav4_c02_s0346",
+              4973
+            ],
+            [
+              "rav4_c02_s0354",
+              4973
+            ],
+            [
+              "rav4_c02_s0219",
+              4972
+            ],
+            [
+              "rav4_c01_s0017",
+              4971
+            ],
+            [
+              "rav4_c01_s0171",
+              4968
+            ],
+            [
+              "rav4_c02_s0336",
+              4964
+            ],
+            [
+              "rav4_c02_s0196",
+              4959
+            ],
+            [
+              "rav4_c01_s0079",
+              4913
+            ],
+            [
+              "rav4_c02_s0352",
+              4905
+            ],
+            [
+              "rav4_c01_s0097",
+              4899
+            ],
+            [
+              "rav4_c02_s0281",
+              4800
+            ],
+            [
+              "rav4_c01_s0150",
+              4745
+            ],
+            [
+              "rav4_c02_s0234",
+              4725
+            ],
+            [
+              "rav4_c01_s0161",
+              4638
+            ],
+            [
+              "rav4_c01_s0123",
+              4635
+            ],
+            [
+              "rav4_c02_s0310",
+              4607
+            ],
+            [
+              "rav4_c02_s0318",
+              4599
+            ],
+            [
+              "rav4_c01_s0127",
+              4566
+            ],
+            [
+              "rav4_c02_s0325",
+              4563
+            ],
+            [
+              "rav4_c02_s0293",
+              4483
+            ],
+            [
+              "rav4_c01_s0035",
+              4414
+            ],
+            [
+              "rav4_c02_s0378",
+              4380
+            ],
+            [
+              "rav4_c02_s0258",
+              4310
+            ],
+            [
+              "rav4_c01_s0033",
+              4299
+            ],
+            [
+              "rav4_c01_s0045",
+              4268
+            ],
+            [
+              "rav4_c02_s0376",
+              4217
+            ],
+            [
+              "rav4_c01_s0054",
+              4171
+            ],
+            [
+              "rav4_c02_s0309",
+              4150
+            ],
+            [
+              "rav4_c02_s0213",
+              4125
+            ],
+            [
+              "rav4_c01_s0039",
+              4120
+            ],
+            [
+              "rav4_c01_s0078",
+              4069
+            ],
+            [
+              "rav4_c01_s0006",
+              4066
+            ],
+            [
+              "rav4_c01_s0162",
+              3976
+            ],
+            [
+              "rav4_c02_s0278",
+              3958
+            ],
+            [
+              "rav4_c01_s0133",
+              3876
+            ],
+            [
+              "rav4_c02_s0335",
+              3786
+            ],
+            [
+              "rav4_c02_s0214",
+              3744
+            ],
+            [
+              "rav4_c02_s0232",
+              3735
+            ],
+            [
+              "rav4_c02_s0338",
+              3698
+            ],
+            [
+              "rav4_c02_s0268",
+              3689
+            ],
+            [
+              "rav4_c02_s0308",
+              3677
+            ],
+            [
+              "rav4_c01_s0066",
+              3670
+            ],
+            [
+              "rav4_c01_s0125",
+              3668
+            ],
+            [
+              "rav4_c02_s0264",
+              3589
+            ],
+            [
+              "rav4_c01_s0151",
+              3575
+            ],
+            [
+              "rav4_c01_s0117",
+              3550
+            ],
+            [
+              "rav4_c01_s0116",
+              3543
+            ],
+            [
+              "rav4_c02_s0286",
+              3516
+            ],
+            [
+              "rav4_c02_s0274",
+              3482
+            ],
+            [
+              "rav4_c01_s0073",
+              3461
+            ],
+            [
+              "rav4_c02_s0227",
+              3419
+            ],
+            [
+              "rav4_c01_s0104",
+              3415
+            ],
+            [
+              "rav4_c01_s0067",
+              3377
+            ],
+            [
+              "rav4_c02_s0339",
+              3357
+            ],
+            [
+              "rav4_c01_s0115",
+              3338
+            ],
+            [
+              "rav4_c02_s0236",
+              3328
+            ],
+            [
+              "rav4_c02_s0291",
+              3303
+            ],
+            [
+              "rav4_c01_s0063",
+              3300
+            ],
+            [
+              "rav4_c02_s0275",
+              3268
+            ],
+            [
+              "rav4_c02_s0360",
+              3224
+            ],
+            [
+              "rav4_c02_s0301",
+              3222
+            ],
+            [
+              "rav4_c01_s0046",
+              3201
+            ],
+            [
+              "rav4_c01_s0163",
+              3194
+            ],
+            [
+              "rav4_c02_s0235",
+              3146
+            ],
+            [
+              "rav4_c02_s0266",
+              3121
+            ],
+            [
+              "rav4_c02_s0247",
+              3080
+            ],
+            [
+              "rav4_c02_s0361",
+              3041
+            ],
+            [
+              "rav4_c01_s0148",
+              3037
+            ],
+            [
+              "rav4_c02_s0305",
+              2966
+            ],
+            [
+              "rav4_c02_s0230",
+              2949
+            ],
+            [
+              "rav4_c02_s0265",
+              2911
+            ],
+            [
+              "rav4_c01_s0021",
+              2904
+            ],
+            [
+              "rav4_c01_s0010",
+              2851
+            ],
+            [
+              "rav4_c02_s0207",
+              2846
+            ],
+            [
+              "rav4_c01_s0184",
+              2816
+            ],
+            [
+              "rav4_c02_s0316",
+              2755
+            ],
+            [
+              "rav4_c01_s0023",
+              2754
+            ],
+            [
+              "rav4_c02_s0288",
+              2714
+            ],
+            [
+              "rav4_c01_s0126",
+              2707
+            ],
+            [
+              "rav4_c01_s0185",
+              2694
+            ],
+            [
+              "rav4_c02_s0267",
+              2670
+            ],
+            [
+              "rav4_c02_s0276",
+              2658
+            ],
+            [
+              "rav4_c01_s0128",
+              2655
+            ],
+            [
+              "rav4_c01_s0007",
+              2647
+            ],
+            [
+              "rav4_c02_s0257",
+              2594
+            ],
+            [
+              "rav4_c02_s0303",
+              2571
+            ],
+            [
+              "rav4_c01_s0002",
+              2567
+            ],
+            [
+              "rav4_c02_s0255",
+              2534
+            ],
+            [
+              "rav4_c01_s0099",
+              2533
+            ],
+            [
+              "rav4_c01_s0179",
+              2490
+            ],
+            [
+              "rav4_c01_s0153",
+              2483
+            ],
+            [
+              "rav4_c01_s0034",
+              2474
+            ],
+            [
+              "rav4_c01_s0087",
+              2464
+            ],
+            [
+              "rav4_c02_s0377",
+              2389
+            ],
+            [
+              "rav4_c02_s0348",
+              2388
+            ],
+            [
+              "rav4_c01_s0124",
+              2319
+            ],
+            [
+              "rav4_c02_s0256",
+              2254
+            ],
+            [
+              "rav4_c02_s0300",
+              2241
+            ],
+            [
+              "rav4_c02_s0307",
+              2197
+            ],
+            [
+              "rav4_c02_s0374",
+              2042
+            ],
+            [
+              "rav4_c01_s0053",
+              2006
+            ],
+            [
+              "rav4_c01_s0044",
+              1965
+            ],
+            [
+              "rav4_c02_s0197",
+              1859
+            ],
+            [
+              "rav4_c02_s0357",
+              1857
+            ],
+            [
+              "rav4_c02_s0372",
+              1834
+            ],
+            [
+              "rav4_c01_s0020",
+              1832
+            ],
+            [
+              "rav4_c02_s0319",
+              1771
+            ],
+            [
+              "rav4_c01_s0107",
+              1697
+            ],
+            [
+              "rav4_c02_s0337",
+              1645
+            ],
+            [
+              "rav4_c01_s0015",
+              1638
+            ],
+            [
+              "rav4_c02_s0254",
+              1629
+            ],
+            [
+              "rav4_c02_s0259",
+              1605
+            ],
+            [
+              "rav4_c01_s0090",
+              1523
+            ],
+            [
+              "rav4_c01_s0036",
+              1522
+            ],
+            [
+              "rav4_c02_s0273",
+              1514
+            ],
+            [
+              "rav4_c02_s0311",
+              1474
+            ],
+            [
+              "rav4_c01_s0146",
+              1422
+            ],
+            [
+              "rav4_c01_s0147",
+              1354
+            ],
+            [
+              "rav4_c01_s0111",
+              1255
+            ],
+            [
+              "rav4_c01_s0164",
+              1227
+            ],
+            [
+              "rav4_c02_s0294",
+              1126
+            ],
+            [
+              "rav4_c02_s0295",
+              1114
+            ],
+            [
+              "rav4_c01_s0077",
+              1018
+            ],
+            [
+              "rav4_c01_s0086",
+              1006
+            ],
+            [
+              "rav4_c02_s0283",
+              956
+            ],
+            [
+              "rav4_c01_s0132",
+              894
+            ],
+            [
+              "rav4_c02_s0358",
+              870
+            ],
+            [
+              "rav4_c02_s0315",
+              868
+            ],
+            [
+              "rav4_c02_s0299",
+              779
+            ],
+            [
+              "rav4_c02_s0355",
+              676
+            ],
+            [
+              "rav4_c02_s0306",
+              590
+            ],
+            [
+              "rav4_c02_s0329",
+              583
+            ],
+            [
+              "rav4_c02_s0356",
+              521
+            ],
+            [
+              "rav4_c02_s0226",
+              492
+            ],
+            [
+              "rav4_c01_s0172",
+              384
+            ],
+            [
+              "rav4_c01_s0013",
+              269
+            ],
+            [
+              "rav4_c02_s0206",
+              256
+            ],
+            [
+              "rav4_c02_s0359",
+              223
+            ],
+            [
+              "rav4_c02_s0201",
+              222
+            ],
+            [
+              "rav4_c02_s0375",
+              180
+            ],
+            [
+              "rav4_c02_s0362",
+              48
+            ],
+            [
+              "rav4_c01_s0149",
+              7
+            ]
+          ],
+          "validated_catalog_and_direct": true,
+          "milliseconds": [
+            138.481764,
+            129.567449,
+            139.157342,
+            132.932282,
+            129.31574,
+            128.535678,
+            128.637786
+          ],
+          "p50_ms": 129.567449,
+          "average_ms": 132.37543442857142
+        }
+      ],
+      "typed_view_and_parameters_validated": true
+    }
+  ]
+}
