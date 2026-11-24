@@ -116,6 +116,18 @@ SELECT schema_tree
 FROM clp_dataset_schemas('westermo');
 ```
 
+Discovery can also describe just the events matching a condition:
+
+```sql
+SELECT schema_tree, matching_rows
+FROM clp_dataset_schemas('westermo', predicate := $$
+    _events.system_id::VARCHAR = 'system-1'
+    AND _events.load_1m::DOUBLE >= 2
+$$);
+```
+
+Put event conditions in `predicate`; an outer `WHERE` filters the returned schema rows. The [schema-discovery guide](docs/schema-discovery.md) walks through field lists, tree output, exact matching counts, time windows, first/last appearance, direct access and string shapes, with a runnable example.
+
 You can project and filter individual document fields without creating another view. Apply the SQL type to the leaf you need:
 
 ```sql
@@ -204,14 +216,15 @@ CAN's `ts` is relative milliseconds. Restrict time-window queries to a `source_f
 
 For a catalog containing a `message` field, `_shape.message` returns the stored string shape. For example, `Error: Exit code 1` and `Error: Exit code 128` both become `Error: Exit code %int%`:
 
-```sql
-CALL clp_create_catalog('logs');
-CALL clp_register('logs', '/path/to/log/archives');
-
-SELECT _shape.message::VARCHAR AS shape, count(*) AS occurrences
-FROM logs.events
-GROUP BY shape
-ORDER BY occurrences DESC;
+```python
+db.execute("CALL clp_create_catalog('logs')")
+db.execute("CALL clp_register('logs', '/path/to/log/archives')")
+db.execute("""
+    SELECT _shape.message::VARCHAR AS shape, count(*) AS occurrences
+    FROM logs.events
+    GROUP BY shape
+    ORDER BY occurrences DESC
+""").fetchall()
 ```
 
 `%int%`, `%float%` and `%str%` represent variables. `_shape_all.message` also derives shapes for text stored whole. Both projections work on the default `events` table and typed views, and their paths refer to the original document fields. Add `WHERE` conditions on `_events` fields or typed columns to analyze a subset of records.
