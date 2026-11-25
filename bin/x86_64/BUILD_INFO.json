@@ -1,5 +1,5 @@
 {
-  "built_on_utc": "2026-11-24",
+  "built_on_utc": "2026-11-25",
   "platform": "linux_x86_64",
   "glibc_minimum": "2.28",
   "cli_version": "clp-s 1.0.0-xp",
@@ -7,24 +7,30 @@
   "extension_unsigned": true,
   "build_expiry_days": 15,
   "source_revisions": {
-    "engine": "8ccc5c9194a2b9190aaf325b8798f192d89c17e7",
-    "duckdb_integration": "80597528814d0c9e3274ceed852c8b6a0ad9e4d9",
-    "uncommitted_changes_included": true
+    "engine": "fbb04310547b05ff2c688b7f3eb5ba10bbcc1535",
+    "duckdb_integration": "bd70f4a5c87b1be511d45eb14fd17b28ea09c936",
+    "uncommitted_changes_included": false
   },
   "artifacts": {
     "clp-s": {
-      "bytes": 18085872,
-      "sha256": "b5adf7c5e85337cb9590a72df044e73227c86e177f2cc78da0ad096315f32160"
-    },
-    "clp_s.duckdb_extension": {
-      "bytes": 51100454,
-      "sha256": "ccf87fa4a10b9e01911c8100d232365db7f81c6b46f697f8e609f24c1cceb9a1",
+      "bytes": 18226072,
+      "sha256": "0d0e07eb3c38868d7d2e38bdf3a81d7aaed1fa2c80ff09f861ea3f4d438eefe2",
       "source_revisions": {
-        "engine": "9030cb9906115eb4cba9cc35331aad13c7c19054",
-        "duckdb_integration": "b6ac05db3c17aaa65858b6f608ce9ff3d3f8a6d7",
+        "engine": "fbb04310547b05ff2c688b7f3eb5ba10bbcc1535",
+        "duckdb_integration": "bd70f4a5c87b1be511d45eb14fd17b28ea09c936",
         "uncommitted_changes_included": false
       },
-      "built_on_utc": "2026-11-24"
+      "built_on_utc": "2026-11-25"
+    },
+    "clp_s.duckdb_extension": {
+      "bytes": 57762070,
+      "sha256": "d04bda782e85693563a35ddad205fda5724698e72e4950726df121f55deb8b14",
+      "source_revisions": {
+        "engine": "fbb04310547b05ff2c688b7f3eb5ba10bbcc1535",
+        "duckdb_integration": "bd70f4a5c87b1be511d45eb14fd17b28ea09c936",
+        "uncommitted_changes_included": false
+      },
+      "built_on_utc": "2026-11-25"
     }
   }
 }

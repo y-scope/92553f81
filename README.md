@@ -127,7 +127,7 @@ WHERE _events.system_id::VARCHAR = 'system-1'
   AND _events.load_1m::DOUBLE >= 2;
 ```
 
-The same `FROM` and `WHERE` work with either result format and with ordinary event queries. The [discovery guide](docs/schema-discovery.md) walks through three core features—schema discovery, string shapes and first/last-seen field history—with runnable examples and their results.
+The same `FROM` and `WHERE` work with either result format and with ordinary event queries. The [DuckDB agentic helper guide](docs/agentic-helper-features.md) covers schema discovery, relevant-field search, string shapes, semantic message search and first/last-seen field history, all supported by the bundled extension. The [Presto guide](docs/presto-agentic-helper-features.md) covers the same operations in Presto.
 
 You can project and filter individual document fields without creating another view. Apply the SQL type to the leaf you need:
 

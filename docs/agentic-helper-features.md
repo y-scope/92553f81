@@ -1,14 +1,18 @@
-# Discover schemas, string shapes and field history
+# Agentic helper features in DuckDB
 
-CLP records are documents. Each document can have nested fields, and the fields and their types can vary between records. Three discovery features help you understand the data before querying it:
+CLP records are documents. Each document can have nested fields, and the fields and their types can vary between records. These helpers let you discover structure, find relevant fields and messages, and inspect field history:
 
 | Feature | What it tells you | SQL |
 |---|---|---|
 | [Schema discovery](#discover-fields-and-document-structure) | Which fields and types exist, and how they are nested. | `clp_schema()`, `clp_schema_tree()` |
+| [Relevant fields](#find-relevant-fields) | Which available fields relate to an investigation goal. | `clp_schema_semantic_search(intent)` |
+| [Semantic message search](#search-by-meaning) | Which message patterns relate to a natural-language description. | `clp_semantic_match(field, query, threshold)` |
 | [String shapes](#find-repeated-string-shapes) | Which text patterns repeat within a field, and how often. | `clp_string_shape(field)` |
 | [Field history](#find-when-a-field-first-or-last-appears) | When a field first or last appears in the selected events. | `clp_first_seen`, `clp_last_seen` |
 
-All three support event filters, so you can explore the full dataset or a subset. The walkthrough uses four request events in `discovery_demo`: one successful payment request, two failed payment requests and one failed checkout request. Failed requests have a nested `error` object. [Prepare the example catalog](#prepare-the-example) to follow along, or substitute your own catalog and fields.
+All these helpers support event filters, so you can explore the full dataset or a subset. The walkthrough uses four request events in `discovery_demo`: one successful payment request, two failed payment requests and one failed checkout request. Failed requests have a nested `error` object. [Prepare the example catalog](#prepare-the-example) to follow along, or substitute your own catalog and fields.
+
+For Presto syntax, use the [Presto guide](presto-agentic-helper-features.md).
 
 ## Discover fields and document structure
 
@@ -99,6 +103,33 @@ This condition selects the two failed payment requests in the example. To return
 
 Filters access document values through `_events`. Changing the status condition to `_events.status::BIGINT = 200` selects the successful request. Its schema has no `error` branch: `clp_schema()` omits the error paths, and `clp_schema_tree()` omits the error node. CLP resolves filters from archive metadata when possible and reads event data when necessary.
 
+## Find relevant fields
+
+Use `clp_schema_semantic_search` when you know what you want to investigate but do not yet know the field names:
+
+```sql
+SELECT clp_schema_semantic_search('error classification and retry status')
+FROM discovery_demo.events
+WHERE _events.service::VARCHAR = 'payments'
+ORDER BY relevance DESC, field_path
+LIMIT 10;
+```
+
+The result has four columns:
+
+| Column | Meaning |
+|---|---|
+| `field_path` | An existing document path, suitable for selecting the field in your next query. |
+| `source_types` | The distinct stored types observed at this path in matching events. |
+| `relevance` | Semantic similarity to the intent. Higher is closer, not a probability. |
+| `matched_text` | The field descriptor supplied to the semantic service. |
+
+`WHERE` selects the events whose schema is searched. CLP merges their field paths and types across the selected archives **before ranking**, so `LIMIT 10` selects the ten highest-ranked fields across that whole scope. Empty selections return no rows. Direct access through `clp_search`, typed views, and both catalog modes work the same way.
+
+Ranking uses the full path, its identifier words, and its source types. For example, `db.connectionPool.waitMs` contributes the words `db connection pool wait ms`. Event values and message text are not used or sent for this operation. Opaque names such as `signal_001` still need a human description to convey their meaning. The helper suggests fields to inspect, without choosing or executing a subsequent event query.
+
+The intent must be a nonempty constant of at most 512 Unicode characters. Long descriptors are limited to 512 characters, and `matched_text` shows exactly what was scored. It uses the same [semantic service](#semantic-service) as `clp_semantic_match`. Service errors fail the query rather than returning an incomplete ranking.
+
 ## Find repeated string shapes
 
 A schema describes document structure and types. A string shape describes the repeated text pattern inside one field. In the example, `Request 11 failed` and `Request 13 failed` share the shape `Request %int% failed`. Group by that shape to count occurrences:
@@ -119,6 +150,58 @@ GROUP BY shape;
 `%int%` represents the varying integer. Shapes can also contain `%float%` and `%str%` variables. `clp_string_shape` returns `VARCHAR`. Missing, null and non-string values return NULL. With a typed view, pass its string column directly, for example `clp_string_shape(text)` when `text` maps to `message`.
 
 CLP reads stored shapes and occurrence counts when they can answer the query, avoiding a scan of individual messages. Filters that select part of an archive may require scanning. The argument must refer to an original CLP archive field, through either catalog or direct access. Strings stored whole remain unchanged. See [string-shape queries](../README.md#group-log-messages-by-string-shape) for the `_shape` and `_shape_all` alternatives.
+
+## Search by meaning
+
+Use `clp_semantic_match` when you can describe a problem but do not know the exact message wording:
+
+```sql
+SELECT _events.message::VARCHAR AS message,
+       _events.status::BIGINT AS status
+FROM discovery_demo.events
+WHERE clp_semantic_match(_events.message::VARCHAR, 'request failures', 0.6)
+  AND _events.service::VARCHAR = 'payments';
+```
+
+The third argument is an inclusive similarity threshold between `0` and `1`. It defaults to `0.3` when omitted. Higher thresholds select fewer shapes. A score is model similarity, not a probability. Query text and threshold must be constants. With a typed view, use `clp_semantic_match(message, 'request failures', 0.6)`.
+
+CLP sends the selected field's distinct string shapes and the query text to the semantic service, then filters the matching encoded IDs locally. Events with the same shape share a match decision. This searches the fixed message pattern, not the individual values represented by its placeholders. Strings stored without a shape are scored as complete dictionary values. Use ordinary predicates for exact IDs, numeric values, and time windows.
+
+### Refine an investigation with the same predicate
+
+Inspect the schema of semantically matching events, or count their recurring shapes:
+
+```sql
+SELECT clp_schema_tree() AS schema_tree
+FROM discovery_demo.events
+WHERE clp_semantic_match(_events.message::VARCHAR, 'request failures', 0.6)
+  AND _events.status::BIGINT >= 500;
+
+SELECT clp_string_shape(_events.message::VARCHAR) AS shape,
+       count(*) AS occurrences
+FROM discovery_demo.events
+WHERE clp_semantic_match(_events.message::VARCHAR, 'request failures', 0.6)
+  AND _events.status::BIGINT >= 500
+GROUP BY shape
+ORDER BY occurrences DESC;
+```
+
+Replace `clp_schema_tree()` with `clp_schema()` for field rows. First/last-seen queries accept the same semantic filter. For the example's declared timestamp:
+
+```sql
+SELECT clp_first_seen(_events.message, _events.ts) AS first_seen,
+       clp_last_seen(_events.message, _events.ts) AS last_seen
+FROM discovery_demo.events
+WHERE clp_semantic_match(_events.message::VARCHAR, 'request failures', 0.6);
+```
+
+Both values are timestamps. The next section explains ordering values and field-presence rules. Direct access uses the same expressions with `FROM clp_search('<archive path>')`.
+
+### Matching rules and service behavior
+
+Combine semantic matching with ordinary conditions using `AND`. `NOT` and combinations containing only semantic predicates also work. An `OR` mixing semantic and ordinary predicates is currently rejected. Missing, null, and non-string values do not match, including under `NOT`.
+
+The function must filter an archive string field in `WHERE`. It cannot score arbitrary materialized strings or project a score in `SELECT`. Binary UUID columns, array-element matching, and live KV-IR streams are unsupported. Use the event-table discovery queries above for semantic-filtered schema and field history.
 
 ## Find when a field first or last appears
 
@@ -190,6 +273,12 @@ ORDER BY latency_ms;
 **For best performance, filter, project and aggregate typed leaf fields**, such as `_events.error.code::VARCHAR`. A leaf is a value at the end of a document path. For repeated analysis, a [typed view](../README.md#filter-project-and-aggregate-using-typed-columns) exposes these paths as ordinary SQL columns.
 
 ## Reference
+
+### Semantic service
+
+Both semantic helpers use the YScope service at `https://ca-central-semantic-cache.yscope.ai`. They require access to that service. Field discovery sends the intent and field descriptors. Message search sends the intent and stored string shapes, or complete strings where no shape is stored. These texts can contain application information. Event values are not sent for field discovery.
+
+Results depend on model similarity. Use ordinary predicates for exact values and identifiers. Requests have a bounded deadline, and service errors fail the query instead of dropping a filter or returning a partial ranking.
 
 ### Prepare the example
 
@@ -329,17 +418,18 @@ This returns the same merged schema as the catalog query. `clp_search` accepts a
 
 ### Schema-discovery input and query restrictions
 
-Schema discovery requires whole CLP archives. KV-IR inputs and individual archive-member entries are unsupported, including when mixed with whole archives in a catalog.
+Schema discovery supports CLP archives and selected archive members through the catalog. KV-IR inputs are unsupported, including when mixed with archives in a catalog.
 
-Use the zero-argument APIs in an ungrouped schema query over one event table or direct archive source. Put `clp_schema()` directly in the SELECT list to expose its two columns. They describe stored event fields, including fields omitted by a view's projection. Ordinary scalar filters, bound parameters and `FILTER (WHERE ...)` are supported. Joins, grouping, windows, row limits on the input events, volatile conditions and combining them with non-schema aggregates are not supported.
+Use the schema APIs in an ungrouped query over one event table or direct archive source. Put `clp_schema()` directly in the SELECT list to expose its two columns. They describe stored event fields, including fields omitted by a view's projection. Ordinary scalar filters, bound parameters and `FILTER (WHERE ...)` are supported. Joins, grouping, windows, row limits on the input events, volatile conditions and combining them with non-schema aggregates are not supported.
 
 | API | Output | Result when no events match |
 |---|---|---|
 | `clp_schema()` | `field_path VARCHAR`, `source_types VARCHAR[]` | Zero rows. |
 | `clp_schema_tree()` | One `VARIANT` column. | One row containing `{"types":["object"],"children":{}}`. |
+| `clp_schema_semantic_search(intent)` | `field_path`, `source_types`, `relevance`, `matched_text`. | Zero rows. |
 
 Filter or aggregate discovered field rows in an [outer query](#add-time-and-field-filters). Selecting both result formats with the same event filter shares discovery work and repeats the tree alongside each field row.
 
 ### Verified on the public datasets
 
-These operations were checked against all 1.64 million Westermo records and 27.40 million CAN frames, through both catalog and direct access. See [the validation results](discovery-validation.md) for concrete field histories, query timings and a script to repeat the checks.
+Schema discovery, string shapes and field history were checked against all 1.64 million Westermo records and 27.40 million CAN frames, through both catalog and direct access. See [the validation results](discovery-validation.md) for concrete field histories, query timings and a script to repeat the checks.

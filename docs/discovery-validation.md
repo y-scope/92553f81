@@ -20,7 +20,7 @@ First/last seen is useful with relative clocks too:
 
 These bounds describe the selected recording. They do not establish when a signal was introduced across the vehicle fleet or application history. Both datasets use relative clocks, so scope queries to a source when clocks may reset.
 
-The string fields here are identifiers: 19 system names and 382 recording names. `clp_string_shape` returns these strings unchanged, and their grouped counts match the source data. These datasets validate that behavior. The [discovery walkthrough](schema-discovery.md#find-repeated-string-shapes) demonstrates a text pattern shared by multiple messages.
+The string fields here are identifiers: 19 system names and 382 recording names. `clp_string_shape` returns these strings unchanged, and their grouped counts match the source data. These datasets validate that behavior. The [discovery walkthrough](agentic-helper-features.md#find-repeated-string-shapes) demonstrates a text pattern shared by multiple messages.
 
 ## Query latency
 
