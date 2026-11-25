@@ -12,7 +12,7 @@ A CLP event is a document with nested fields. Different events can have differen
 
 These examples require a Presto deployment with the updated CLP connector. This repository bundles the DuckDB extension and CLI; obtain the Presto connector from YScope.
 
-Examples use a CLP table named `clp.default.discovery_demo` containing the [four request events](agentic-helper-features.md#prepare-the-example), with `message`, `service` and `status` exposed as typed columns. Register those archives in your Presto deployment or substitute your own table and fields. Presto merges the selected archives' schemas, including with S3 storage and Metalog catalogs. The [DuckDB guide](agentic-helper-features.md) covers its corresponding syntax.
+Examples use a CLP table named `clp.default.discovery_demo` containing the [four request events](duckdb-agentic-helper-features.md#prepare-the-example), with `message`, `service` and `status` exposed as typed columns. Register those archives in your Presto deployment or substitute your own table and fields. Presto merges the selected archives' schemas, including with S3 storage and Metalog catalogs. The [DuckDB guide](duckdb-agentic-helper-features.md) covers its corresponding syntax.
 
 ## Discover the schema
 
